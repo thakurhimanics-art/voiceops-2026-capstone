@@ -1,22 +1,37 @@
 {
-  "total_files": 1,
+  "total_files": 2,
   "success_count": 0,
-  "failed_count": 1,
+  "failed_count": 2,
+  "unsupported_files_count": 0,
   "input_dir": "sample_inputs\\audio_sample",
   "output_dir": "C:\\Users\\Himani Thakur\\Desktop\\VoiceOps\\results\\voice_batch_output",
   "language_code": "hi-IN",
   "files": [
     {
-      "file_name": "test_voice_1.wav",
-      "file_path": "sample_inputs\\audio_sample\\test_voice_1.wav",
-      "status": "missing_api_key",
+      "file_name": "customer_query.wav.m4a",
+      "file_path": "sample_inputs\\audio_sample\\customer_query.wav.m4a",
+      "status": "transcription_error",
+      "latency_seconds": 0.023,
       "transcription": "",
       "generated_text_reply": "",
       "spoken_text_reply": "",
       "output_audio_path": null,
       "retrieved_section_ids": [],
       "decision": "answer",
-      "error_message": "GNANI_API_KEY is not set in environment (.env). Voice transcription requires an active Gnani API key."
+      "error_message": "HTTPSConnectionPool(host='api.vachana.ai', port=443): Max retries exceeded with url: /stt/v3 (Caused by NameResolutionError(\"HTTPSConnection(host='api.vachana.ai', port=443): Failed to resolve 'api.vachana.ai' ([Errno 11001] getaddrinfo failed)\"))"
+    },
+    {
+      "file_name": "test_voice_1.wav",
+      "file_path": "sample_inputs\\audio_sample\\test_voice_1.wav",
+      "status": "transcription_error",
+      "latency_seconds": 0.005,
+      "transcription": "",
+      "generated_text_reply": "",
+      "spoken_text_reply": "",
+      "output_audio_path": null,
+      "retrieved_section_ids": [],
+      "decision": "answer",
+      "error_message": "HTTPSConnectionPool(host='api.vachana.ai', port=443): Max retries exceeded with url: /stt/v3 (Caused by NameResolutionError(\"HTTPSConnection(host='api.vachana.ai', port=443): Failed to resolve 'api.vachana.ai' ([Errno 11001] getaddrinfo failed)\"))"
     }
   ]
 }
