@@ -1,0 +1,531 @@
+{
+  "evaluation_name": "step2_diagnostic_post_fix",
+  "date": "2026-10-30 23:11:01",
+  "total_test_cases": 25,
+  "passed_count": 20,
+  "failed_count": 5,
+  "pass_rate_percentage": 80.0,
+  "results": [
+    {
+      "id": "HO_UNSEEN_01",
+      "category": "unseen_kb",
+      "question": "What is the policy if a customer uses abusive language or verbal threats towards a support executive?",
+      "expected_core": "Warning given first, call/chat disconnected if abuse continues, account flagged under Code of Conduct",
+      "expect_abstain": false,
+      "actual_decision": "escalate",
+      "actual_reply": "That needs urgent attention. I'm creating a support ticket and connecting you immediately to a colleague who handles account security and escalations.",
+      "retrieved_evidence": [
+        "STY-4",
+        "ESC-1",
+        "ESC-2",
+        "IDV-3",
+        "CAN-1"
+      ],
+      "sections_used": [
+        "ESC-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['ESC-2']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_02",
+      "category": "unseen_kb",
+      "question": "Can I cancel an order while its status is still 'processing' before dispatch?",
+      "expected_core": "Can be cancelled before dispatch/packing with full refund",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Any order can be cancelled free of charge until it is shipped directly from My Orders in the app, with immediate full refund initiated.",
+      "retrieved_evidence": [
+        "CAN-1",
+        "CAN-3",
+        "IDV-1",
+        "CAN-2",
+        "DWM-4"
+      ],
+      "sections_used": [
+        "CAN-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['CAN-1']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_03",
+      "category": "unseen_kb",
+      "question": "What is the membership fee and duration for ZentroMart Plus?",
+      "expected_core": "₹499 per year for 12 months",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "ZentroMart Plus costs ₹999 a year (12 months validity).",
+      "retrieved_evidence": [
+        "PLS-1",
+        "RET-6",
+        "PLS-3",
+        "DEL-2",
+        "REF-5"
+      ],
+      "sections_used": [
+        "PLS-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['PLS-1']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_04",
+      "category": "unseen_kb",
+      "question": "Is Express delivery available to every pincode across India?",
+      "expected_core": "Not all pincodes; only select metro and tier-1 serviceable pincodes",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Standard delivery takes 3 to 6 business days for metro cities and 5 to 9 business days for other locations. Express delivery is only available on select metro pincodes, not all pincodes in India.",
+      "retrieved_evidence": [
+        "DEL-5",
+        "DEL-1",
+        "PAY-2",
+        "DEL-3",
+        "DEL-2"
+      ],
+      "sections_used": [
+        "DEL-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DEL-1']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_05",
+      "category": "unseen_kb",
+      "question": "What should I do if one item is missing from a package with multiple items delivered?",
+      "expected_core": "Report within 48 hours of delivery with packaging photos and unboxing details",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Damage or missing items must be reported within 48 hours of delivery with packaging photos; claims made after 48 hours cannot be accepted under the damaged policy and are referred to warranty.",
+      "retrieved_evidence": [
+        "DWM-4",
+        "DWM-1",
+        "RET-5",
+        "TRK-2",
+        "ESC-2"
+      ],
+      "sections_used": [
+        "DWM-4"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DWM-4']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_06",
+      "category": "unseen_kb",
+      "question": "Does ZentroMart accept international credit cards issued by foreign banks?",
+      "expected_core": "No, only Indian domestic debit/credit cards with 3D Secure",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "ZentroMart accepts only Indian domestic debit and credit cards with 3D Secure; international cards or foreign bank cards are not accepted.",
+      "retrieved_evidence": [
+        "PAY-1",
+        "DEL-5",
+        "FAQ-5",
+        "WAR-3",
+        "REF-2"
+      ],
+      "sections_used": [
+        "PAY-3",
+        "PAY-1"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: False, Content grounded: True"
+    },
+    {
+      "id": "HO_UNSEEN_07",
+      "category": "unseen_kb",
+      "question": "Is open-box delivery inspection available for grocery orders?",
+      "expected_core": "Open-box delivery applies only to eligible high-value electronics, not groceries",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Innerwear and swimwear cannot be returned for fit or change of mind.",
+      "retrieved_evidence": [
+        "DEL-2",
+        "CAN-3",
+        "DEL-1",
+        "PAY-2",
+        "DEL-3"
+      ],
+      "sections_used": [
+        "RET-5"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: True, Content grounded: False"
+    },
+    {
+      "id": "HO_UNSEEN_08",
+      "category": "unseen_kb",
+      "question": "How do I troubleshoot a smart plug that keeps dropping Wi-Fi connection?",
+      "expected_core": "Reset the device by holding power button and ensure 2.4 GHz Wi-Fi band",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Make sure the companion app has Bluetooth and location permissions enabled, restart both devices, and unpair and re-pair if the connection drops.",
+      "retrieved_evidence": [
+        "TRB-2",
+        "IDV-2",
+        "FAQ-1",
+        "ESC-4",
+        "products.csv:ELE-0016"
+      ],
+      "sections_used": [
+        "TRB-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['TRB-2']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_09",
+      "category": "unseen_kb",
+      "question": "Can I request an exchange for a different size instead of a refund on apparel?",
+      "expected_core": "Yes, size exchange is allowed within the return window if stock is available",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Yes, size or colour exchanges are available on clothing and footwear within the 15-day return window, subject to stock availability.",
+      "retrieved_evidence": [
+        "RET-9",
+        "RET-1",
+        "PAY-4",
+        "REF-4",
+        "REF-2"
+      ],
+      "sections_used": [
+        "RET-9"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-1']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSEEN_10",
+      "category": "unseen_kb",
+      "question": "Is an OTP required when handing over a returned package to the pickup executive?",
+      "expected_core": "Yes, OTP verification is required at pickup handoff",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Yes, an OTP verification is required at pickup handoff to the courier executive, and the refund is initiated after warehouse inspection within 24 hours.",
+      "retrieved_evidence": [
+        "RET-6",
+        "ESC-1",
+        "IDV-1",
+        "RET-2",
+        "REF-1"
+      ],
+      "sections_used": [
+        "RET-7"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: False, Content grounded: True"
+    },
+    {
+      "id": "HO_PARA_01",
+      "category": "paraphrased",
+      "question": "Can I hand back my sneakers if they don't fit well?",
+      "expected_core": "15 days return window from delivery for footwear/fashion",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "You can return it within 15 days of delivery. Orders placed in the 1 to 15 October festive sale get 30 days.",
+      "retrieved_evidence": [
+        "RET-2",
+        "RET-8",
+        "products.csv:FSH-0033",
+        "products.csv:FSH-0034",
+        "products.csv:FSH-0029"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-2']) and response is grounded."
+    },
+    {
+      "id": "HO_PARA_02",
+      "category": "paraphrased",
+      "question": "When will money return to my UPI bank account after item pickup?",
+      "expected_core": "1 to 3 business days after initiation",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "1 to 3 business days after the refund is initiated.",
+      "retrieved_evidence": [
+        "RET-6",
+        "RET-2",
+        "REF-1",
+        "RET-7",
+        "DWM-2"
+      ],
+      "sections_used": [
+        "REF-2"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: False, Content grounded: True"
+    },
+    {
+      "id": "HO_PARA_03",
+      "category": "paraphrased",
+      "question": "If my courier arrives and nobody opens the door, do they cancel immediately?",
+      "expected_core": "No, courier attempts delivery up to 3 times before returning to warehouse",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "The courier tries up to 3 times to deliver your package; after the third failed attempt, the parcel goes back to the warehouse.",
+      "retrieved_evidence": [
+        "DEL-3",
+        "CAN-3",
+        "CAN-1",
+        "REF-5",
+        "RVP-3"
+      ],
+      "sections_used": [
+        "DEL-3"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DEL-3']) and response is grounded."
+    },
+    {
+      "id": "HO_PARA_04",
+      "category": "paraphrased",
+      "question": "My newly bought earphone case was cracked right out of the box, what should I do?",
+      "expected_core": "Report damaged item within 48 hours with photos for replacement or refund",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "If an item arrives damaged or cracked, report it within 48 hours of delivery with photos in the app for a free replacement or full refund.",
+      "retrieved_evidence": [
+        "DWM-1",
+        "RET-6",
+        "DWM-2",
+        "ESC-2",
+        "TRB-1"
+      ],
+      "sections_used": [
+        "DWM-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DWM-1']) and response is grounded."
+    },
+    {
+      "id": "HO_PARA_05",
+      "category": "paraphrased",
+      "question": "Can I return a pack of men's vests if the size is wrong?",
+      "expected_core": "Innerwear cannot be returned for fit or change of mind",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Innerwear and swimwear cannot be returned for fit or change of mind.",
+      "retrieved_evidence": [
+        "RET-5",
+        "RET-2",
+        "RET-9",
+        "products.csv:INR-0064",
+        "products.csv:INR-0065"
+      ],
+      "sections_used": [
+        "RET-5"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-5']) and response is grounded."
+    },
+    {
+      "id": "HO_MULTI_01",
+      "category": "multi_chunk",
+      "question": "I bought a luxury smart TV worth ₹24,000 during the festive sale and it arrived broken. What happens?",
+      "expected_core": "Escalate to Priority Resolution team due to damage > ₹10,000, 30-day festive window, free pickup",
+      "expect_abstain": false,
+      "actual_decision": "escalate",
+      "actual_reply": "This item is valued over ₹10,000, so per our policy I am creating a support ticket and handing over to our Priority Resolution team colleague.",
+      "retrieved_evidence": [
+        "DWM-1",
+        "DWM-3",
+        "RET-6",
+        "ESC-1",
+        "RET-8"
+      ],
+      "sections_used": [
+        "DWM-3",
+        "ESC-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DWM-3', 'ESC-1', 'RET-8', 'RET-6']) and response is grounded."
+    },
+    {
+      "id": "HO_MULTI_02",
+      "category": "multi_chunk",
+      "question": "If I initiated a credit card refund on Thursday 15 October 2026, when is the latest it should arrive?",
+      "expected_core": "5 to 7 business days, by 24 or 26 October 2026, skipping Sunday 18 Oct and Monday 19 Oct holiday",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Between 22 October 2026 and 24 October 2026, counting 5 to 7 business days: Monday to Saturday, skipping warehouse holidays (by 24 October 2026).",
+      "retrieved_evidence": [
+        "REF-1",
+        "REF-2",
+        "REF-6",
+        "PAY-4",
+        "REF-4"
+      ],
+      "sections_used": [
+        "REF-2",
+        "KB-00.3"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['REF-2']) and response is grounded."
+    },
+    {
+      "id": "HO_MULTI_03",
+      "category": "multi_chunk",
+      "question": "I am a Plus member returning a formal shirt bought on 2 October 2026. Will I be charged a reverse pickup fee, and how long do I have to return it?",
+      "expected_core": "No reverse pickup fee for Plus members, and 30 days return window for festive sale purchase",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "ZentroMart Plus members pay no reverse pickup fee, and orders placed during the 1 to 15 October festive sale get an extended 30-day return window.",
+      "retrieved_evidence": [
+        "PLS-1",
+        "RET-6",
+        "RET-2",
+        "REF-2",
+        "ESC-2"
+      ],
+      "sections_used": [
+        "PLS-2",
+        "RET-8",
+        "RET-6"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-6']) and response is grounded."
+    },
+    {
+      "id": "HO_UNSUP_01",
+      "category": "unsupported",
+      "question": "Do you offer student discounts on MacBook or iPad purchases with university ID?",
+      "expected_core": "Abstain honestly: state no information available and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "ESC-4",
+        "CPN-2",
+        "REF-4",
+        "ESC-2",
+        "CPN-3"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "HO_UNSUP_02",
+      "category": "unsupported",
+      "question": "Can I book a midnight cake delivery in Mumbai for my sister's birthday?",
+      "expected_core": "Abstain honestly: state no information available and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "CAN-3",
+        "RVP-1",
+        "DEL-2",
+        "CAN-1",
+        "WAR-2"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "HO_UNSUP_03",
+      "category": "unsupported",
+      "question": "Do you accept payment in Bitcoin or Ethereum for gadgets?",
+      "expected_core": "Abstain honestly: state no information available and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "ESC-4",
+        "REF-2",
+        "FAQ-5",
+        "PAY-1",
+        "ESC-2"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "HO_UNSUP_04",
+      "category": "unsupported",
+      "question": "Can I visit your physical retail store in Connaught Place, New Delhi to test headphones?",
+      "expected_core": "Abstain honestly: state no information available and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "MKS-1",
+        "products.csv:ELE-0001",
+        "products.csv:ELE-0002",
+        "products.csv:ELE-0005",
+        "products.csv:ELE-0003"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "HO_UNSUP_05",
+      "category": "unsupported",
+      "question": "Can you provide a B2B bulk tax invoice with my company's GSTIN number?",
+      "expected_core": "Abstain honestly: state no information available and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "REF-6",
+        "ESC-4",
+        "CAN-1",
+        "FAQ-4",
+        "CAN-3"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "HO_OUTDATED_01",
+      "category": "outdated_misleading",
+      "question": "Under the September 2026 return policy POL-RET-v3, can I return my smartwatch after 9 days?",
+      "expected_core": "Superseded policy rejection: POL-RET-v3 is inactive; current window for electronics is 7 days under POL-RET-v4",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Electronics can be returned within 7 days of delivery.",
+      "retrieved_evidence": [
+        "RET-2",
+        "RET-3",
+        "CAN-2",
+        "RET-7",
+        "CAN-1"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-2', 'RET-3']) and response is grounded."
+    },
+    {
+      "id": "HO_OUTDATED_02",
+      "category": "outdated_misleading",
+      "question": "I heard from an old forum that refunds can be transferred to Paytm or PhonePe wallet directly. Can you transfer my refund there?",
+      "expected_core": "Refunds are processed only to original payment source or ZentroMart Wallet, third party wallets not supported",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Refunds cannot be transferred to third-party wallets like Paytm or PhonePe; they are processed only to the original payment method or ZentroMart Wallet.",
+      "retrieved_evidence": [
+        "REF-2",
+        "PAY-4",
+        "REF-3",
+        "RET-5",
+        "REF-6"
+      ],
+      "sections_used": [
+        "REF-1",
+        "PAY-1"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: False, Content grounded: True"
+    }
+  ]
+}

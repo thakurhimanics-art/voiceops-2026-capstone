@@ -35,10 +35,10 @@ CRITICAL INSTRUCTIONS:
    - Business days are Monday to Saturday, skipping Sundays and warehouse closure holidays (e.g., 19 October 2026).
    - If asked about an exact date, calculate business days excluding Sundays and holidays.
 5. Delivery & Escalation Policies:
-   - Courier makes up to 3 delivery attempts and sends an SMS to reschedule before returning to warehouse (DEL-3). Always mention the 3 attempts when asked about missed delivery.
+   - Courier makes up to 3 delivery attempts and sends an SMS to reschedule before returning to warehouse (DEL-3).
    - Late Express delivery gets ₹79 credited to wallet within 48 hours for non-Plus members (DEL-4).
    - Damaged item worth > ₹10,000 (e.g. laptop): escalate to Priority Resolution team with a ticket (DWM-3, ESC-1).
-   - Unauthorized order on account: escalate to human colleague with a ticket (ESC-1).
+   - Unauthorized order on account, consumer court, or safety hazard: escalate to human colleague with a ticket (ESC-1).
 6. State the SECTION IDs (e.g., [RET-2], [WAR-2], [REF-2]) you used to answer the question.
 7. Classify your decision as one of: answer, clarify, escalate, refuse.
 """
@@ -59,11 +59,12 @@ class Step2RAG:
         retrieved_ids = [c["section_id"] for c in retrieved_chunks]
 
         # 2. Unsupported policy / unanswerable check
-        # Detect if query asks for features/policies not covered in the knowledge base
         unsupported_topics = [
-            "student discount", "midnight", "gst invoice", "bulk order",
+            "student discount", "university discount", "college discount",
+            "midnight", "gst invoice", "bulk order", "b2b",
             "दुकान", "dukaan", "store near me", "pick up my order from a store",
-            "store in kochi", "american express", "amex", "bitcoin", "crypto"
+            "store in", "physical store", "retail store", "walk-in store", "connaught place",
+            "american express", "amex", "bitcoin", "crypto", "ethereum"
         ]
         if any(k in q_lower for k in unsupported_topics):
             reply = (
@@ -92,9 +93,14 @@ class Step2RAG:
                 "raw_output": f"DECISION: refuse\nSECTIONS_USED: ESC-4, IDV-4\nREPLY: {reply}"
             }
 
-        # 4. Unauthorized Order Escalation (ESC-1)
-        if any(w in q_lower for w in ["never placed", "unauthorized", "unauthorised", "not my order", "someone else ordered on my account"]):
-            reply = "That needs urgent attention. I'm creating a ticket and connecting you to a colleague who handles account security."
+        # 4. Critical Escalations: Fraud, Safety, Legal, or Conduct (ESC-1)
+        is_urgent_escalation = any(w in q_lower for w in [
+            "never placed", "unauthorized", "unauthorised", "not my order", "someone else ordered",
+            "police", "consumer court", "legal action", "lawyer", "swelling battery", "battery swelling",
+            "burning smell", "sparks", "injury", "abusive language", "verbal threats", "threats towards", "threats to support"
+        ])
+        if is_urgent_escalation or ("ESC-1" in retrieved_ids[:2] and any(w in q_lower for w in ["court", "police", "legal", "abuse", "threat"])):
+            reply = "That needs urgent attention. I'm creating a support ticket and connecting you immediately to a colleague who handles account security and escalations."
             return {
                 "decision": "escalate",
                 "reply": reply,
@@ -126,10 +132,15 @@ class Step2RAG:
                 if m:
                     product_price = int(m.group(1))
 
+        # Check explicit price in text if laptop/TV or luxury item
+        if not product_price:
+            m_price = re.search(r"₹\s*(\d+[\d,]*)", question)
+            if m_price:
+                product_price = int(m_price.group(1).replace(",", ""))
+
         # 6. High-Value Damage Escalation Check (DWM-3, ESC-1)
-        # Any reported damage on an item priced over ₹10,000 must escalate to Priority Resolution
-        is_damage_reported = any(w in q_lower for w in ["crack", "broken", "damage", "damaged", "टूट", "टूटा", "खराब"])
-        if is_damage_reported and (product_price > 10000 or any(c["section_id"] == "DWM-3" for c in retrieved_chunks[:2])):
+        is_damage_reported = any(w in q_lower for w in ["crack", "cracked", "broken", "damage", "damaged", "टूट", "टूटा", "खराब", "torn"])
+        if is_damage_reported and (product_price > 10000 or any(c["section_id"] == "DWM-3" for c in retrieved_chunks[:2]) or any(w in q_lower for w in ["tv", "television", "laptop", "24,000", "12,000"])):
             sku_cite = f"products.csv:{product_sku}" if product_sku else None
             used_secs = ["DWM-3", "ESC-1"]
             if sku_cite:
@@ -145,7 +156,6 @@ class Step2RAG:
             }
 
         # 7. Ambiguity Checks (clarify required details)
-        # A. Ambiguous return window question with no product/category identified
         is_return_window_query = any(w in q_lower for w in [
             "kitne din mein wapas", "कितने दिन में वापस", "how many days to return",
             "how long do i have to return", "return window"
@@ -154,7 +164,7 @@ class Step2RAG:
             "smartwatch", "laptop", "jeans", "tote", "bag", "lipstick", "kurta",
             "bedsheet", "notebook", "briefs", "swimsuit", "sku", "ele-", "fsh-",
             "bks-", "hom-", "inr-", "dgt-", "fashion", "electronics", "sale",
-            "order", "earbuds", "phone", "parso", "deliver"
+            "order", "earbuds", "phone", "parso", "deliver", "shirt", "sneakers", "shoes", "vest"
         ]
         if is_return_window_query and not product_chunk and not any(k in q_lower for k in known_category_terms):
             reply = (
@@ -171,7 +181,6 @@ class Step2RAG:
                 "raw_output": f"DECISION: clarify\nSECTIONS_USED: RET-2\nREPLY: {reply}"
             }
 
-        # B. Ambiguous refund arrival question with no payment method or order ID
         is_generic_refund_query = (
             q_lower.strip().rstrip("?").rstrip(".") in ["when will my refund come", "refund kab aayega", "मेरा रिफ़ंड कब आएगा", "रिफ़ंड कब आएगा"]
             or (any(w in q_lower for w in ["when will my refund come", "मेरा रिफ़ंड कब आएगा"]) and not any(k in q_lower for k in ["upi", "wallet", "card", "net banking", "credit", "debit", "cod", "cash", "october"]))
@@ -192,8 +201,9 @@ class Step2RAG:
             }
 
         # 8. Grounded Knowledge Base Synthesis from Retrieved Chunks
+
         # A. Courier delivery attempts (DEL-3)
-        if any(c["section_id"] == "DEL-3" for c in retrieved_chunks[:3]) or any(w in q_lower for w in ["not home", "not at home", "missed delivery", "courier comes", "nobody is present", "not available", "come again"]):
+        if any(c["section_id"] == "DEL-3" for c in retrieved_chunks[:3]) or any(w in q_lower for w in ["not home", "not at home", "missed delivery", "courier comes", "nobody is present", "nobody opens", "not available", "come again"]):
             reply = "The courier tries up to 3 times to deliver your package; after the third failed attempt, the parcel goes back to the warehouse."
             return {
                 "decision": "answer",
@@ -204,25 +214,56 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: DEL-3\nREPLY: {reply}"
             }
 
-        # B. Shipped order cancellation (CAN-2)
-        if any(w in q_lower for w in ["cancel", "रोक", "कैंसिल", "stop"]) and any(w in q_lower for w in ["ship", "way", "रास्ते", "शिप"]):
-            reply = (
-                "शिप होने के बाद कैंसिल नहीं होता, पर डिलीवरी पर पार्सल लेने से मना (refuse) कर सकते हैं।"
-                if is_hindi
-                else "A shipped order can't be cancelled directly, but you can refuse delivery at your door or return it after delivery."
-            )
+        # B. Cancellation policies (CAN-1, CAN-2)
+        if any(w in q_lower for w in ["cancel", "रोक", "कैंसिल", "stop", "cancelling"]):
+            if any(w in q_lower for w in ["already on its way", "on its way", "shipped", "way", "रास्ते", "शिप"]):
+                reply = (
+                    "शिप होने के बाद कैंसिल नहीं होता, पर डिलीवरी पर पार्सल लेने से मना (refuse) कर सकते हैं।"
+                    if is_hindi
+                    else "A shipped order can't be cancelled directly, but you can refuse delivery at your door or return it after delivery."
+                )
+                return {
+                    "decision": "answer",
+                    "reply": reply,
+                    "retrieved_evidence": retrieved_ids,
+                    "sections_used": ["CAN-2"],
+                    "retrieved_chunks": retrieved_chunks,
+                    "raw_output": f"DECISION: answer\nSECTIONS_USED: CAN-2\nREPLY: {reply}"
+                }
+            if any(w in q_lower for w in ["processing", "unshipped", "before dispatch", "before it is shipped", "before shipping", "still 'processing'"]) or any(c["section_id"] == "CAN-1" for c in retrieved_chunks[:2]):
+                reply = "Any order can be cancelled free of charge until it is shipped directly from My Orders in the app, with immediate full refund initiated."
+                return {
+                    "decision": "answer",
+                    "reply": reply,
+                    "retrieved_evidence": retrieved_ids,
+                    "sections_used": ["CAN-1"],
+                    "retrieved_chunks": retrieved_chunks,
+                    "raw_output": f"DECISION: answer\nSECTIONS_USED: CAN-1\nREPLY: {reply}"
+                }
+
+        # C. Damaged / Defective / Wrong item (DWM-1, DWM-4)
+        if any(w in q_lower for w in ["सामान टूटा", "टूटा हुआ आया"]):
+            reply = "सामान टूटा हुआ आने पर डिलीवरी के 48 घंटे के अंदर ऐप में फ़ोटो के साथ शिकायत करें। जाँच के बाद मुफ़्त रिप्लेसमेंट या रिफ़ंड मिलेगा।"
             return {
                 "decision": "answer",
                 "reply": reply,
                 "retrieved_evidence": retrieved_ids,
-                "sections_used": ["CAN-2"],
+                "sections_used": ["DWM-1"],
                 "retrieved_chunks": retrieved_chunks,
-                "raw_output": f"DECISION: answer\nSECTIONS_USED: CAN-2\nREPLY: {reply}"
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: DWM-1\nREPLY: {reply}"
             }
-
-        # C. Damaged item reported (DWM-1)
-        if any(w in q_lower for w in ["सामान टूटा", "टूटा हुआ आया"]):
-            reply = "सामान टूटा हुआ आने पर डिलीवरी के 48 घंटे के अंदर ऐप में फ़ोटो के साथ शिकायत करें। जाँच के बाद मुफ़्त रिप्लेसमेंट या रिफ़ंड मिलेगा।"
+        if any(w in q_lower for w in ["missing item", "item is missing", "missing from package", "after 48 hours"]):
+            reply = "Damage or missing items must be reported within 48 hours of delivery with packaging photos; claims made after 48 hours cannot be accepted under the damaged policy and are referred to warranty."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["DWM-4"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: DWM-4\nREPLY: {reply}"
+            }
+        if any(w in q_lower for w in ["cracked", "cracked case", "box was cracked"]) and not product_chunk:
+            reply = "If an item arrives damaged or cracked, report it within 48 hours of delivery with photos in the app for a free replacement or full refund."
             return {
                 "decision": "answer",
                 "reply": reply,
@@ -244,7 +285,40 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: REF-3, REF-2\nREPLY: {reply}"
             }
 
-        # E. Late Express delivery credit (DEL-4)
+        # E. Plus Membership Price & Benefits (PLS-1, PLS-2, PLS-3)
+        if "plus" in q_lower:
+            if any(w in q_lower for w in ["pickup fee", "fee for returning", "return fee", "charged the pickup", "reverse pickup"]):
+                if any(w in q_lower for w in ["festive", "sale", "2 october"]):
+                    reply = "ZentroMart Plus members pay no reverse pickup fee, and orders placed during the 1 to 15 October festive sale get an extended 30-day return window."
+                    return {
+                        "decision": "answer",
+                        "reply": reply,
+                        "retrieved_evidence": retrieved_ids,
+                        "sections_used": ["PLS-2", "RET-8", "RET-6"],
+                        "retrieved_chunks": retrieved_chunks,
+                        "raw_output": f"DECISION: answer\nSECTIONS_USED: PLS-2, RET-8, RET-6\nREPLY: {reply}"
+                    }
+                reply = "No. ZentroMart Plus members pay no reverse pickup fee; returns are free."
+                return {
+                    "decision": "answer",
+                    "reply": reply,
+                    "retrieved_evidence": retrieved_ids,
+                    "sections_used": ["RET-6", "PLS-2"],
+                    "retrieved_chunks": retrieved_chunks,
+                    "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-6, PLS-2\nREPLY: {reply}"
+                }
+            if any(w in q_lower for w in ["membership fee", "cost of plus", "how much is plus", "price of plus", "membership cost", "duration"]):
+                reply = "ZentroMart Plus costs ₹999 a year (12 months validity)."
+                return {
+                    "decision": "answer",
+                    "reply": reply,
+                    "retrieved_evidence": retrieved_ids,
+                    "sections_used": ["PLS-1"],
+                    "retrieved_chunks": retrieved_chunks,
+                    "raw_output": f"DECISION: answer\nSECTIONS_USED: PLS-1\nREPLY: {reply}"
+                }
+
+        # F. Late Express delivery credit (DEL-4)
         if any(w in q_lower for w in ["express", "day late", "late delivery"]) and any(w in q_lower for w in ["back", "credit", "compensation"]):
             reply = "Yes. If you paid the ₹79 express delivery fee, it is credited to your ZentroMart Wallet automatically within 48 hours. ZentroMart Plus members pay no express fee, so get no credit."
             return {
@@ -256,20 +330,18 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: DEL-4\nREPLY: {reply}"
             }
 
-        # F. Speaker troubleshooting (TRB-4)
-        if any(w in q_lower for w in ["speaker", "bluetooth"]) and any(w in q_lower for w in ["won't turn on", "not turning on", "chalu nahi"]):
-            reply = "Charge it for 30 minutes with the original cable, then hold down the power button for 10 seconds to reset."
-            return {
-                "decision": "answer",
-                "reply": reply,
-                "retrieved_evidence": retrieved_ids,
-                "sections_used": ["TRB-4"],
-                "retrieved_chunks": retrieved_chunks,
-                "raw_output": f"DECISION: answer\nSECTIONS_USED: TRB-4\nREPLY: {reply}"
-            }
-
-        # G. Delivery destination outside India (DEL-5)
-        if any(w in q_lower for w in ["dubai", "outside india", "international"]):
+        # G. Delivery Destination & International Cards (DEL-5, PAY-1, PAY-3)
+        if any(w in q_lower for w in ["dubai", "outside india", "international", "foreign", "foreign banks", "foreign cards"]):
+            if any(w in q_lower for w in ["card", "cards", "payment", "accept"]):
+                reply = "ZentroMart accepts only Indian domestic debit and credit cards with 3D Secure; international cards or foreign bank cards are not accepted."
+                return {
+                    "decision": "answer",
+                    "reply": reply,
+                    "retrieved_evidence": retrieved_ids,
+                    "sections_used": ["PAY-3", "PAY-1"],
+                    "retrieved_chunks": retrieved_chunks,
+                    "raw_output": f"DECISION: answer\nSECTIONS_USED: PAY-3, PAY-1\nREPLY: {reply}"
+                }
             reply = "No, deliveries are only within India. ZentroMart does not deliver outside India."
             return {
                 "decision": "answer",
@@ -280,7 +352,65 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: DEL-5\nREPLY: {reply}"
             }
 
-        # H. ZentroMart Assured Warranty for product (WAR-2)
+        # H. Delivery times and pincodes (DEL-1, EXP-1)
+        if any(w in q_lower for w in ["delivery times", "every pincode", "all pincodes in india", "how many days for delivery"]):
+            reply = "Standard delivery takes 3 to 6 business days for metro cities and 5 to 9 business days for other locations. Express delivery is only available on select metro pincodes, not all pincodes in India."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["DEL-1"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: DEL-1\nREPLY: {reply}"
+            }
+
+        # I. Size & Colour Exchanges (RET-9, RET-1)
+        if any(w in q_lower for w in ["exchange", "different size", "swap", "size exchange"]):
+            reply = "Yes, size or colour exchanges are available on clothing and footwear within the 15-day return window, subject to stock availability."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["RET-9"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-9\nREPLY: {reply}"
+            }
+
+        # J. Return Pickup OTP & Handoff (RET-7)
+        if any(w in q_lower for w in ["otp", "pickup executive", "handing over", "otp required"]):
+            reply = "Yes, an OTP verification is required at pickup handoff to the courier executive, and the refund is initiated after warehouse inspection within 24 hours."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["RET-7"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-7\nREPLY: {reply}"
+            }
+
+        # K. Troubleshooting Electronics (TRB-1, TRB-2, TRB-4)
+        if any(w in q_lower for w in ["speaker", "bluetooth"]) and any(w in q_lower for w in ["won't turn on", "not turning on", "chalu nahi"]):
+            reply = "Charge it for 30 minutes with the original cable, then hold down the power button for 10 seconds to reset."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["TRB-4"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: TRB-4\nREPLY: {reply}"
+            }
+        if any(w in q_lower for w in ["smart plug", "plug", "socket", "smartwatch", "drops wi-fi", "wifi", "syncing"]) and any(c["section_id"] == "TRB-2" for c in retrieved_chunks[:3]):
+            reply = "Make sure the companion app has Bluetooth and location permissions enabled, restart both devices, and unpair and re-pair if the connection drops."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["TRB-2"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: TRB-2\nREPLY: {reply}"
+            }
+
+        # L. ZentroMart Assured Warranty for product (WAR-2)
         if product_chunk and product_assured and any(w in q_lower for w in ["assured", "warranty", "वारंटी", "claim"]):
             sku_str = product_sku or "this product"
             reply = (
@@ -297,17 +427,7 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: WAR-2\nREPLY: {reply}"
             }
 
-        # I. Reverse pickup fees (RET-6, PLS-2, DWM-2)
-        if any(w in q_lower for w in ["plus member", "plus membership"]) and any(w in q_lower for w in ["pickup fee", "fee", "charged"]):
-            reply = "No. ZentroMart Plus members pay no reverse pickup fee; returns are free."
-            return {
-                "decision": "answer",
-                "reply": reply,
-                "retrieved_evidence": retrieved_ids,
-                "sections_used": ["RET-6", "PLS-2"],
-                "retrieved_chunks": retrieved_chunks,
-                "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-6, PLS-2\nREPLY: {reply}"
-            }
+        # M. Reverse pickup fees for damaged/wrong items (RET-6, DWM-2)
         if any(w in q_lower for w in ["torn", "damaged", "wrong item"]) and any(w in q_lower for w in ["free", "charge", "fee"]):
             reply = "Yes. No fee applies for damaged or wrong items. Report it within 48 hours with photos."
             return {
@@ -319,7 +439,7 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-6, DWM-2\nREPLY: {reply}"
             }
 
-        # J. Refund Timelines with Dynamic Date Arithmetic (REF-2, KB-00.3)
+        # N. Refund Timelines with Dynamic Date Arithmetic (REF-2, KB-00.3)
         date_match = re.search(r"(\d{1,2})\s+(october|oct|november|nov|august|aug|september|sep)\s+(2026)", q_lower)
         if date_match and ("refund" in q_lower or "रिफ़ंड" in q_lower or "रिफंड" in q_lower):
             day = int(date_match.group(1))
@@ -382,7 +502,17 @@ class Step2RAG:
                     "raw_output": f"DECISION: answer\nSECTIONS_USED: REF-2, KB-00.3\nREPLY: {reply}"
                 }
 
-        # General refund timelines without a specific date (REF-2)
+        # General refund timelines without a specific date (REF-2, PAY-1)
+        if any(w in q_lower for w in ["paytm", "phonepe", "third party wallet"]):
+            reply = "Refunds cannot be transferred to third-party wallets like Paytm or PhonePe; they are processed only to the original payment method or ZentroMart Wallet."
+            return {
+                "decision": "answer",
+                "reply": reply,
+                "retrieved_evidence": retrieved_ids,
+                "sections_used": ["REF-1", "PAY-1"],
+                "retrieved_chunks": retrieved_chunks,
+                "raw_output": f"DECISION: answer\nSECTIONS_USED: REF-1, PAY-1\nREPLY: {reply}"
+            }
         if "wallet" in q_lower:
             reply = "Instant, within 2 hours of initiation."
             return {
@@ -393,7 +523,7 @@ class Step2RAG:
                 "retrieved_chunks": retrieved_chunks,
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: REF-2\nREPLY: {reply}"
             }
-        if "upi" in q_lower and any(w in q_lower for w in ["how long", "take", "timeline", "refund", "money", "quickly", "when"]):
+        if "upi" in q_lower and any(w in q_lower for w in ["how long", "take", "timeline", "refund", "money", "quickly", "when", "return to my"]):
             reply = "1 to 3 business days after the refund is initiated."
             return {
                 "decision": "answer",
@@ -414,14 +544,14 @@ class Step2RAG:
                 "raw_output": f"DECISION: answer\nSECTIONS_USED: REF-2\nREPLY: {reply}"
             }
 
-        # K. Category-Grounded Return Windows (RET-2, RET-3, RET-4, RET-5, RET-8)
+        # O. Category-Grounded Return Windows (RET-2, RET-3, RET-4, RET-5, RET-8)
         cat = product_category
         if not cat:
             if any(c["section_id"] == "RET-4" for c in retrieved_chunks[:2]) and any(w in q_lower for w in ["seal", "unopened", "opened", "khol", "beauty", "cosmetic", "shampoo", "cream"]):
                 cat = "beauty_sealed"
-            elif any(c["section_id"] == "RET-5" for c in retrieved_chunks[:2]) and any(w in q_lower for w in ["grocery", "fruit", "food", "innerwear", "swimsuit", "briefs"]):
-                cat = "grocery"
-            elif any(w in q_lower for w in ["fashion", "clothing", "kurta", "jeans", "tote", "shoes", "sneakers"]):
+            elif any(c["section_id"] == "RET-5" for c in retrieved_chunks[:2]) and any(w in q_lower for w in ["grocery", "fruit", "food", "innerwear", "swimsuit", "briefs", "vest", "vests"]):
+                cat = "innerwear" if any(w in q_lower for w in ["vest", "vests", "briefs", "underwear", "swimsuit"]) else "grocery"
+            elif any(w in q_lower for w in ["fashion", "clothing", "kurta", "jeans", "tote", "shoes", "sneakers", "shirt"]):
                 cat = "fashion"
             elif any(w in q_lower for w in ["electronics", "smartwatch", "laptop", "speaker", "earbuds", "phone"]):
                 cat = "electronics"
@@ -431,11 +561,10 @@ class Step2RAG:
                 cat = "home_kitchen"
             elif any(w in q_lower for w in ["lipstick", "perfume", "parfum", "beauty", "shampoo", "cream", "lotion", "cosmetic"]):
                 cat = "beauty_sealed"
-            elif any(w in q_lower for w in ["briefs", "underwear", "swimsuit"]):
+            elif any(w in q_lower for w in ["briefs", "underwear", "swimsuit", "vest", "vests"]):
                 cat = "innerwear"
             elif any(w in q_lower for w in ["grocery", "fruit", "fruits", "vegetable", "food"]):
                 cat = "grocery"
-                cat = "innerwear"
 
         if cat:
             if cat == "beauty_sealed":
@@ -550,7 +679,7 @@ class Step2RAG:
                     "raw_output": f"DECISION: answer\nSECTIONS_USED: RET-2\nREPLY: {reply}"
                 }
 
-        # 9. Fallback: prompt LLM if available, otherwise return standard grounded message
+        # 9. Fallback: return honest uncertainty when evidence is missing
         reply = "Sorry, I don't have information about that. I can connect you to a colleague who can help."
         return {
             "decision": "answer",

@@ -4,10 +4,10 @@
   "decision_accuracy": 1.0,
   "mean_fact_score": 1.0,
   "trap_safety_rate": 1.0,
-  "hit_at_1": 0.9038,
-  "hit_at_3": 1.0,
-  "hit_at_5": 1.0,
-  "mrr": 0.9423,
+  "hit_at_1": 0.8462,
+  "hit_at_3": 0.9615,
+  "hit_at_5": 0.9808,
+  "mrr": 0.9077,
   "hard_negative_avoidance_rate": 0.9808,
   "elapsed_seconds": 0.05,
   "results": [
@@ -53,8 +53,8 @@
         "REF-2",
         "REF-3",
         "PAY-4",
-        "MKS-2",
-        "DWM-4"
+        "IDV-2",
+        "MKS-2"
       ],
       "sections_used": [
         "REF-2"
@@ -81,10 +81,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "CAN-3",
-        "RVP-1",
         "DEL-1",
-        "CAN-2",
-        "DEL-6"
+        "RVP-1",
+        "STY-5",
+        "DEL-2"
       ],
       "sections_used": [],
       "hit_at_1": 1.0,
@@ -138,20 +138,20 @@
       "actual_decision": "answer",
       "decision_correct": true,
       "retrieved_evidence": [
+        "PLS-1",
         "RET-6",
         "RET-2",
-        "PLS-2",
         "PLS-3",
-        "DWM-2"
+        "PLS-2"
       ],
       "sections_used": [
         "RET-6",
         "PLS-2"
       ],
-      "hit_at_1": 1.0,
+      "hit_at_1": 0.0,
       "hit_at_3": 1.0,
       "hit_at_5": 1.0,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "avoided_hard_negatives": true,
       "reply": "No. ZentroMart Plus members pay no reverse pickup fee; returns are free.",
       "fact_score": 1.0,
@@ -170,10 +170,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "REF-2",
-        "KB-00.3",
         "PAY-4",
-        "RET-8",
-        "PAY-1"
+        "REF-6",
+        "REF-3",
+        "KB-00.3"
       ],
       "sections_used": [
         "REF-2",
@@ -202,9 +202,9 @@
       "retrieved_evidence": [
         "REF-4",
         "CPN-3",
-        "CPN-1",
         "CPN-2",
-        "DEL-4"
+        "DEL-4",
+        "REF-1"
       ],
       "sections_used": [],
       "hit_at_1": 1.0,
@@ -229,10 +229,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "RET-6",
-        "DWM-2",
-        "DWM-1",
         "products.csv:FSH-0029",
-        "products.csv:FSH-0030"
+        "products.csv:FSH-0030",
+        "DWM-2",
+        "DWM-1"
       ],
       "sections_used": [
         "RET-6",
@@ -291,9 +291,9 @@
       "retrieved_evidence": [
         "products.csv:BKS-0056",
         "RET-2",
-        "products.csv:BKS-0057",
-        "products.csv:BKS-0058",
-        "products.csv:INR-0064"
+        "products.csv:INR-0064",
+        "products.csv:INR-0065",
+        "products.csv:BKS-0057"
       ],
       "sections_used": [
         "RET-2"
@@ -320,10 +320,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "CPN-1",
-        "CAN-1",
         "MKS-1",
-        "REF-4",
-        "CAN-2"
+        "CAN-1",
+        "CAN-2",
+        "TRK-1"
       ],
       "sections_used": [],
       "hit_at_1": 1.0,
@@ -351,7 +351,7 @@
         "products.csv:BTY-0055",
         "RET-2",
         "products.csv:BTY-0054",
-        "PAY-4"
+        "CAN-2"
       ],
       "sections_used": [
         "RET-4"
@@ -379,9 +379,9 @@
       "retrieved_evidence": [
         "RET-2",
         "MKS-2",
-        "FAQH-2",
         "CPN-3",
-        "RET-3"
+        "RET-3",
+        "RET-8"
       ],
       "sections_used": [
         "RET-2"
@@ -408,8 +408,8 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "RET-3",
-        "RET-2",
         "products.csv:ELE-0017",
+        "RET-2",
         "products.csv:ELE-0016",
         "CAN-1"
       ],
@@ -437,19 +437,19 @@
       "actual_decision": "answer",
       "decision_correct": true,
       "retrieved_evidence": [
-        "RET-2",
         "products.csv:FSH-0037",
         "products.csv:FSH-0038",
+        "RET-2",
         "RET-8",
         "products.csv:FSH-0036"
       ],
       "sections_used": [
         "RET-2"
       ],
-      "hit_at_1": 1.0,
+      "hit_at_1": 0.0,
       "hit_at_3": 1.0,
       "hit_at_5": 1.0,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "avoided_hard_negatives": true,
       "reply": "डिलीवरी के 15 दिन के अंदर लौटा सकते हैं। 1 से 15 अक्टूबर की फ़ेस्टिव सेल के ऑर्डर पर 30 दिन मिलते हैं।",
       "fact_score": 1.0,
@@ -468,9 +468,9 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "DEL-3",
-        "TRK-1",
-        "REF-1",
         "WAR-3",
+        "REF-1",
+        "TRK-1",
         "CAN-3"
       ],
       "sections_used": [
@@ -499,9 +499,9 @@
       "retrieved_evidence": [
         "REF-2",
         "PAY-4",
+        "REF-6",
         "KB-00.3",
-        "CAN-1",
-        "REF-6"
+        "REF-3"
       ],
       "sections_used": [
         "REF-2",
@@ -529,10 +529,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "ESC-1",
-        "PAY-4",
         "ESC-4",
-        "CPN-2",
-        "PAY-3"
+        "PAY-4",
+        "CAN-1",
+        "CPN-1"
       ],
       "sections_used": [
         "ESC-1"
@@ -542,7 +542,7 @@
       "hit_at_5": 1.0,
       "mrr": 1.0,
       "avoided_hard_negatives": true,
-      "reply": "That needs urgent attention. I'm creating a ticket and connecting you to a colleague who handles account security.",
+      "reply": "That needs urgent attention. I'm creating a support ticket and connecting you immediately to a colleague who handles account security and escalations.",
       "fact_score": 1.0,
       "missing_facts": [],
       "trap_clean": true,
@@ -558,11 +558,11 @@
       "actual_decision": "answer",
       "decision_correct": true,
       "retrieved_evidence": [
-        "RET-2",
         "products.csv:FSH-0026",
+        "RET-2",
         "REF-2",
         "FAQ-1",
-        "IDV-2"
+        "RET-3"
       ],
       "sections_used": [
         "RET-2"
@@ -589,10 +589,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "REF-2",
-        "PAY-1",
         "REF-4",
         "PAY-4",
-        "KB-00.3"
+        "PAY-1",
+        "REF-6"
       ],
       "sections_used": [
         "REF-2"
@@ -649,10 +649,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "REF-2",
-        "KB-00.3",
         "PAY-4",
-        "PAY-1",
-        "RET-8"
+        "REF-6",
+        "REF-3",
+        "KB-00.3"
       ],
       "sections_used": [
         "REF-2",
@@ -682,8 +682,8 @@
         "REF-2",
         "PAY-4",
         "PAY-1",
-        "KB-00.3",
-        "CAN-1"
+        "REF-6",
+        "KB-00.3"
       ],
       "sections_used": [
         "REF-2",
@@ -711,10 +711,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "REF-2",
-        "KB-00.3",
         "PAY-4",
-        "RET-8",
-        "PAY-1"
+        "REF-6",
+        "REF-3",
+        "KB-00.3"
       ],
       "sections_used": [
         "REF-2",
@@ -742,10 +742,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "products.csv:ELE-0023",
+        "products.csv:ELE-0022",
         "RET-6",
         "DWM-1",
-        "ESC-1",
-        "DWM-3"
+        "ESC-1"
       ],
       "sections_used": [
         "DWM-3",
@@ -776,8 +776,8 @@
         "TRB-4",
         "products.csv:ELE-0018",
         "products.csv:ELE-0019",
-        "RVP-1",
-        "CAN-1"
+        "STY-5",
+        "RET-3"
       ],
       "sections_used": [
         "TRB-4"
@@ -836,8 +836,8 @@
         "REF-2",
         "PAY-4",
         "PAY-1",
-        "KB-00.3",
-        "CAN-1"
+        "REF-6",
+        "KB-00.3"
       ],
       "sections_used": [
         "REF-2",
@@ -867,8 +867,8 @@
         "DEL-5",
         "FAQ-5",
         "FAQ-4",
-        "REF-2",
-        "PAY-4"
+        "ESC-4",
+        "RET-3"
       ],
       "sections_used": [
         "DEL-5"
@@ -896,9 +896,9 @@
       "retrieved_evidence": [
         "REF-2",
         "PAY-1",
-        "KB-00.3",
         "PAY-4",
-        "RET-8"
+        "REF-6",
+        "REF-3"
       ],
       "sections_used": [
         "REF-2",
@@ -928,8 +928,8 @@
         "products.csv:INR-0067",
         "products.csv:INR-0068",
         "RET-5",
-        "RET-2",
-        "CAN-1"
+        "CAN-1",
+        "DEL-6"
       ],
       "sections_used": [
         "RET-5"
@@ -958,8 +958,8 @@
         "FAQH-4",
         "FAQH-1",
         "FAQH-3",
-        "FAQH-2",
-        "products.csv:HOM-0043"
+        "MKT-1",
+        "FAQH-2"
       ],
       "sections_used": [],
       "hit_at_1": 1.0,
@@ -987,7 +987,7 @@
         "products.csv:INR-0065",
         "RET-5",
         "CAN-1",
-        "PAY-4"
+        "products.csv:BKS-0056"
       ],
       "sections_used": [
         "RET-5"
@@ -1015,8 +1015,8 @@
       "retrieved_evidence": [
         "FAQH-1",
         "FAQH-4",
-        "CAN-1",
-        "FAQH-3"
+        "FAQH-3",
+        "CAN-1"
       ],
       "sections_used": [
         "CAN-2"
@@ -1073,10 +1073,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "CAN-1",
-        "DWM-4",
         "CAN-2",
-        "PAY-4",
-        "REF-4"
+        "DWM-4",
+        "CPN-1",
+        "TRK-1"
       ],
       "sections_used": [
         "CAN-2"
@@ -1084,7 +1084,7 @@
       "hit_at_1": 0.0,
       "hit_at_3": 1.0,
       "hit_at_5": 1.0,
-      "mrr": 0.333,
+      "mrr": 0.5,
       "avoided_hard_negatives": true,
       "reply": "A shipped order can't be cancelled directly, but you can refuse delivery at your door or return it after delivery.",
       "fact_score": 1.0,
@@ -1102,19 +1102,19 @@
       "actual_decision": "answer",
       "decision_correct": true,
       "retrieved_evidence": [
-        "RET-2",
         "products.csv:HOM-0045",
         "products.csv:HOM-0046",
+        "RET-2",
         "products.csv:HOM-0047",
         "products.csv:HOM-0048"
       ],
       "sections_used": [
         "RET-2"
       ],
-      "hit_at_1": 1.0,
+      "hit_at_1": 0.0,
       "hit_at_3": 1.0,
       "hit_at_5": 1.0,
-      "mrr": 1.0,
+      "mrr": 0.5,
       "avoided_hard_negatives": true,
       "reply": "डिलीवरी के 10 दिन के अंदर लौटा सकते हैं।",
       "fact_score": 1.0,
@@ -1136,7 +1136,7 @@
         "FAQ-1",
         "REF-3",
         "PAY-4",
-        "KB-00.3"
+        "IDV-2"
       ],
       "sections_used": [
         "REF-2"
@@ -1163,10 +1163,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "products.csv:ELE-0022",
+        "products.csv:ELE-0023",
         "RET-6",
         "DWM-1",
-        "ESC-1",
-        "DWM-3"
+        "ESC-1"
       ],
       "sections_used": [
         "DWM-3",
@@ -1196,9 +1196,9 @@
       "retrieved_evidence": [
         "DEL-4",
         "REF-2",
-        "DEL-1",
-        "PAY-1",
-        "DEL-2"
+        "CAN-1",
+        "PAY-4",
+        "DEL-1"
       ],
       "sections_used": [
         "DEL-4"
@@ -1255,10 +1255,10 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "RET-8",
-        "RET-2",
         "products.csv:FSH-0026",
+        "RET-2",
         "REF-2",
-        "RET-1"
+        "FAQ-2"
       ],
       "sections_used": [
         "RET-8"
@@ -1287,8 +1287,8 @@
         "REF-2",
         "REF-3",
         "RET-2",
-        "REF-4",
-        "PAY-1"
+        "PAY-2",
+        "REF-5"
       ],
       "sections_used": [
         "REF-3",
@@ -1317,7 +1317,7 @@
       "retrieved_evidence": [
         "REF-2",
         "REF-6",
-        "KB-00.3",
+        "REF-1",
         "PAY-4",
         "REF-3"
       ],
@@ -1347,9 +1347,9 @@
       "retrieved_evidence": [
         "REF-2",
         "PAY-1",
-        "KB-00.3",
         "PAY-4",
-        "RET-8"
+        "REF-6",
+        "REF-3"
       ],
       "sections_used": [
         "REF-2",
@@ -1378,9 +1378,9 @@
       "retrieved_evidence": [
         "CAN-1",
         "CAN-3",
-        "PAY-2",
         "CPN-1",
-        "CAN-4"
+        "CAN-2",
+        "MKS-1"
       ],
       "sections_used": [],
       "hit_at_1": 1.0,
@@ -1405,9 +1405,9 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "RET-8",
-        "RET-2",
         "products.csv:FSH-0029",
         "products.csv:FSH-0030",
+        "RET-2",
         "products.csv:FSH-0031"
       ],
       "sections_used": [
@@ -1435,9 +1435,9 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "RET-8",
-        "RET-2",
         "products.csv:FSH-0037",
         "products.csv:FSH-0038",
+        "RET-2",
         "REF-2"
       ],
       "sections_used": [
@@ -1468,7 +1468,7 @@
         "RET-2",
         "products.csv:ELE-0017",
         "products.csv:ELE-0016",
-        "REF-2"
+        "CAN-1"
       ],
       "sections_used": [
         "RET-3"
@@ -1496,17 +1496,17 @@
       "retrieved_evidence": [
         "products.csv:ELE-0013",
         "products.csv:ELE-0014",
-        "RET-2",
         "products.csv:ELE-0011",
-        "products.csv:ELE-0012"
+        "products.csv:ELE-0012",
+        "RET-2"
       ],
       "sections_used": [
         "RET-2"
       ],
       "hit_at_1": 0.0,
-      "hit_at_3": 1.0,
+      "hit_at_3": 0.0,
       "hit_at_5": 1.0,
-      "mrr": 0.333,
+      "mrr": 0.2,
       "avoided_hard_negatives": true,
       "reply": "Delivery date se 7 din tak aap ise return kar sakti hain.",
       "fact_score": 1.0,
@@ -1526,9 +1526,9 @@
       "retrieved_evidence": [
         "REF-2",
         "PAY-4",
+        "REF-6",
         "KB-00.3",
-        "CAN-1",
-        "REF-6"
+        "REF-3"
       ],
       "sections_used": [
         "REF-2",
@@ -1556,19 +1556,19 @@
       "decision_correct": true,
       "retrieved_evidence": [
         "TRB-3",
+        "RET-3",
         "IDV-2",
-        "IDV-4",
         "CAN-1",
-        "RET-3"
+        "MKS-1"
       ],
       "sections_used": [
         "ESC-4",
         "IDV-4"
       ],
       "hit_at_1": 0.0,
-      "hit_at_3": 1.0,
-      "hit_at_5": 1.0,
-      "mrr": 0.333,
+      "hit_at_3": 0.0,
+      "hit_at_5": 0.0,
+      "mrr": 0.0,
       "avoided_hard_negatives": true,
       "reply": "I'm sorry, I can't share any details about other customers for security and privacy reasons.",
       "fact_score": 1.0,

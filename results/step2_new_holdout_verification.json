@@ -1,0 +1,428 @@
+{
+  "evaluation_name": "step2_new_holdout_verification",
+  "date": "2026-10-30 23:12:07",
+  "total_test_cases": 20,
+  "passed_count": 14,
+  "failed_count": 6,
+  "pass_rate_percentage": 70.0,
+  "categories": {
+    "unseen_kb": "6/8",
+    "paraphrased": "2/4",
+    "multi_chunk": "3/3",
+    "unsupported": "1/3",
+    "outdated_misleading": "2/2"
+  },
+  "results": [
+    {
+      "id": "NH_UNSEEN_01",
+      "category": "unseen_kb",
+      "question": "What is the return window for a hardcover textbook on ZentroMart?",
+      "expected_core": "10 days from delivery for books and stationery",
+      "expect_abstain": false,
+      "actual_decision": "clarify",
+      "actual_reply": "Return windows vary by product category (7 days for electronics, 10 days for books/home, 15 days for fashion). Could you clarify which item you are inquiring about?",
+      "retrieved_evidence": [
+        "RET-2",
+        "CAN-2",
+        "RET-9",
+        "WAR-3",
+        "RET-3"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-2']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSEEN_02",
+      "category": "unseen_kb",
+      "question": "How much is the Cash on Delivery convenience charge per order?",
+      "expected_core": "COD fee of ₹25 applies per order, free for Plus or orders over ₹999",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "PAY-2",
+        "CPN-1",
+        "CAN-1",
+        "CAN-2",
+        "IDV-2"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['PAY-2']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSEEN_03",
+      "category": "unseen_kb",
+      "question": "If an item is marked delivered by the courier but I haven't received it, what is the policy?",
+      "expected_core": "Wait 24 hours, check with building security or neighbors, then contact support",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "The courier tries up to 3 times to deliver your package; after the third failed attempt, the parcel goes back to the warehouse.",
+      "retrieved_evidence": [
+        "DEL-3",
+        "TRK-2",
+        "REF-1",
+        "TRK-1",
+        "RVP-3"
+      ],
+      "sections_used": [
+        "DEL-3"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: True, Content grounded: False"
+    },
+    {
+      "id": "NH_UNSEEN_04",
+      "category": "unseen_kb",
+      "question": "Can I apply two coupon codes on a single festive sale order?",
+      "expected_core": "Only 1 coupon can be applied per order; coupons cannot be combined",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "RET-8",
+        "CPN-1",
+        "CAN-4",
+        "CPN-2",
+        "REF-4"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['CPN-1']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSEEN_05",
+      "category": "unseen_kb",
+      "question": "What should I do if my phone is charging slowly with the bundled adapter?",
+      "expected_core": "Use original charging brick and cable, inspect charging port for lint, avoid heavy use",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Electronics can be returned within 7 days of delivery.",
+      "retrieved_evidence": [
+        "TRB-3",
+        "ESC-2",
+        "IDV-3",
+        "CAN-1",
+        "ESC-4"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: True, Content grounded: False"
+    },
+    {
+      "id": "NH_UNSEEN_06",
+      "category": "unseen_kb",
+      "question": "Can I change my delivery address to a new flat after the order is confirmed?",
+      "expected_core": "Address cannot be changed once placed; cancel before shipping and reorder",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "CAN-2",
+        "DEL-6",
+        "CAN-1",
+        "RET-3",
+        "CAN-3"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DEL-6']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSEEN_07",
+      "category": "unseen_kb",
+      "question": "Can I cancel a 3-month-old ZentroMart Plus membership for a prorated refund?",
+      "expected_core": "Plus membership cannot be cancelled or refunded once activated",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "PLS-1",
+        "PAY-4",
+        "PLS-3",
+        "REF-2",
+        "REF-6"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['PLS-3']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSEEN_08",
+      "category": "unseen_kb",
+      "question": "How does ZentroMart handle safety emergencies like an appliance emitting smoke or sparks?",
+      "expected_core": "Immediate safety escalation to human colleague with a support ticket",
+      "expect_abstain": false,
+      "actual_decision": "escalate",
+      "actual_reply": "That needs urgent attention. I'm creating a support ticket and connecting you immediately to a colleague who handles account security and escalations.",
+      "retrieved_evidence": [
+        "ESC-1",
+        "DWM-5",
+        "REF-2",
+        "IDV-2",
+        "WAR-3"
+      ],
+      "sections_used": [
+        "ESC-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['ESC-1']) and response is grounded."
+    },
+    {
+      "id": "NH_PARA_01",
+      "category": "paraphrased",
+      "question": "Can I send back a winter jacket if the sleeves feel too tight?",
+      "expected_core": "15 days return window from delivery for clothing and fashion",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "RET-2",
+        "CAN-2",
+        "RET-8",
+        "MKS-2",
+        "RET-3"
+      ],
+      "sections_used": [],
+      "passed": false,
+      "reason": "Retrieval hit: True, Content grounded: False"
+    },
+    {
+      "id": "NH_PARA_02",
+      "category": "paraphrased",
+      "question": "How quickly will funds show in my net banking statement after refund approval?",
+      "expected_core": "3 to 5 business days for net banking refunds",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "3 to 5 business days after the refund is initiated.",
+      "retrieved_evidence": [
+        "REF-2",
+        "RET-7",
+        "PAY-1",
+        "PAY-4",
+        "REF-3"
+      ],
+      "sections_used": [
+        "REF-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['REF-2']) and response is grounded."
+    },
+    {
+      "id": "NH_PARA_03",
+      "category": "paraphrased",
+      "question": "If a courier delivery fails on Friday and Saturday, will they reattempt a third time?",
+      "expected_core": "Courier attempts up to 3 times before returning parcel to warehouse",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "The courier tries up to 3 times to deliver your package; after the third failed attempt, the parcel goes back to the warehouse.",
+      "retrieved_evidence": [
+        "DEL-3",
+        "IDV-3",
+        "CAN-3",
+        "REF-5",
+        "PAY-2"
+      ],
+      "sections_used": [
+        "DEL-3"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['DEL-3']) and response is grounded."
+    },
+    {
+      "id": "NH_PARA_04",
+      "category": "paraphrased",
+      "question": "The glass screen protector I ordered arrived completely shattered in the box.",
+      "expected_core": "Report damaged item within 48 hours with photos for free replacement or refund",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Innerwear and swimwear cannot be returned for fit or change of mind.",
+      "retrieved_evidence": [
+        "products.csv:GRO-0062",
+        "CAN-1",
+        "REF-6",
+        "DEL-1",
+        "CAN-2"
+      ],
+      "sections_used": [
+        "RET-5"
+      ],
+      "passed": false,
+      "reason": "Retrieval hit: False, Content grounded: False"
+    },
+    {
+      "id": "NH_MULTI_01",
+      "category": "multi_chunk",
+      "question": "I initiated a credit card refund on Friday 16 October 2026. What is the expected arrival window considering holidays?",
+      "expected_core": "5 to 7 business days, arriving by 23 to 27 October, skipping Sunday 18 Oct and Monday 19 Oct holiday",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Between 23 October 2026 and 26 October 2026, counting 5 to 7 business days: Monday to Saturday, skipping warehouse holidays (by 26 October 2026).",
+      "retrieved_evidence": [
+        "REF-2",
+        "REF-1",
+        "PAY-4",
+        "REF-6",
+        "REF-4"
+      ],
+      "sections_used": [
+        "REF-2",
+        "KB-00.3"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['REF-2']) and response is grounded."
+    },
+    {
+      "id": "NH_MULTI_02",
+      "category": "multi_chunk",
+      "question": "I bought a luxury ₹15,000 gaming console in the festive sale on 4 October that arrived with a cracked casing. Can I return it?",
+      "expected_core": "Damage on item > ₹10,000 escalates to Priority Resolution team with ticket; festive window 30 days",
+      "expect_abstain": false,
+      "actual_decision": "escalate",
+      "actual_reply": "This item is valued over ₹10,000, so per our policy I am creating a support ticket and handing over to our Priority Resolution team colleague.",
+      "retrieved_evidence": [
+        "RET-8",
+        "DWM-1",
+        "RET-2",
+        "RET-6",
+        "DWM-2"
+      ],
+      "sections_used": [
+        "DWM-3",
+        "ESC-1"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-8']) and response is grounded."
+    },
+    {
+      "id": "NH_MULTI_03",
+      "category": "multi_chunk",
+      "question": "I am a Plus member who returned formal trousers. Will ₹49 reverse pickup be deducted from my refund?",
+      "expected_core": "No fee deducted; reverse pickup fee is waived for ZentroMart Plus members",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "No. ZentroMart Plus members pay no reverse pickup fee; returns are free.",
+      "retrieved_evidence": [
+        "RET-6",
+        "PAY-4",
+        "RET-7",
+        "RET-2",
+        "PLS-2"
+      ],
+      "sections_used": [
+        "RET-6",
+        "PLS-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['PLS-2', 'RET-6']) and response is grounded."
+    },
+    {
+      "id": "NH_UNSUP_01",
+      "category": "unsupported",
+      "question": "Can I pay for my electronics order using PayPal USD balance?",
+      "expected_core": "Abstain honestly: state no information and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Electronics can be returned within 7 days of delivery.",
+      "retrieved_evidence": [
+        "CAN-1",
+        "CPN-1",
+        "CAN-2",
+        "PAY-4",
+        "CAN-3"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": false,
+      "reason": "Failed abstention: is_abstaining=False, sections_used=['RET-2']"
+    },
+    {
+      "id": "NH_UNSUP_02",
+      "category": "unsupported",
+      "question": "Do you provide on-site installation and wall-mounting services for split ACs?",
+      "expected_core": "Abstain honestly: state no information and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Sorry, I don't have information about that. I can connect you to a colleague who can help.",
+      "retrieved_evidence": [
+        "ESC-4",
+        "FAQ-5",
+        "ESC-2",
+        "MKS-2",
+        "RET-6"
+      ],
+      "sections_used": [],
+      "passed": true,
+      "reason": "Honest abstention observed with zero fabricated citations."
+    },
+    {
+      "id": "NH_UNSUP_03",
+      "category": "unsupported",
+      "question": "Can I request premium gift wrapping with personalized wax seal stamps?",
+      "expected_core": "Abstain honestly: state no information and offer human colleague",
+      "expect_abstain": true,
+      "actual_decision": "answer",
+      "actual_reply": "Innerwear and swimwear cannot be returned for fit or change of mind.",
+      "retrieved_evidence": [
+        "products.csv:DGT-0069",
+        "products.csv:DGT-0070",
+        "RET-4",
+        "RET-2",
+        "FAQ-2"
+      ],
+      "sections_used": [
+        "RET-5"
+      ],
+      "passed": false,
+      "reason": "Failed abstention: is_abstaining=False, sections_used=['RET-5']"
+    },
+    {
+      "id": "NH_OUTDATED_01",
+      "category": "outdated_misleading",
+      "question": "Under the older POL-RET-v3 policy, can I return beauty cosmetics after opening the bottle and breaking the seal?",
+      "expected_core": "Cosmetics cannot be returned if opened or seal broken; must be unopened and intact",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Beauty products can be returned only if unopened with the seal intact, so an opened one can't be returned.",
+      "retrieved_evidence": [
+        "RET-4",
+        "RET-2",
+        "CAN-2",
+        "DWM-4",
+        "RET-7"
+      ],
+      "sections_used": [
+        "RET-4"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-4']) and response is grounded."
+    },
+    {
+      "id": "NH_OUTDATED_02",
+      "category": "outdated_misleading",
+      "question": "I read online that ZentroMart allows 10 days return on electronics purchased in September 2026. Is that still active for orders delivered today?",
+      "expected_core": "No, items delivered on or after 1 August 2026 have a 7-day return window",
+      "expect_abstain": false,
+      "actual_decision": "answer",
+      "actual_reply": "Electronics can be returned within 7 days of delivery.",
+      "retrieved_evidence": [
+        "RET-2",
+        "RET-3",
+        "REF-1",
+        "PAY-2",
+        "REF-2"
+      ],
+      "sections_used": [
+        "RET-2"
+      ],
+      "passed": true,
+      "reason": "Retrieved valid chunk (['RET-3', 'RET-2']) and response is grounded."
+    }
+  ]
+}
