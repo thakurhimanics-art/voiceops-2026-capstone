@@ -1,0 +1,12 @@
+{
+  "file_name": "test_voice_1.wav",
+  "file_path": "sample_inputs\\audio_sample\\test_voice_1.wav",
+  "status": "missing_api_key",
+  "transcription": "",
+  "generated_text_reply": "",
+  "spoken_text_reply": "",
+  "output_audio_path": null,
+  "retrieved_section_ids": [],
+  "decision": "answer",
+  "error_message": "GNANI_API_KEY is not set in environment (.env). Voice transcription requires an active Gnani API key."
+}
