@@ -69,12 +69,15 @@ python run.py --chat
 3. **Turn 3 (Verification Success):**  
    - Customer: `"Last four digits 4533 hain"`  
    - Assistant: Validates identity, unlocks synthetic order data, and greets customer safely.
-4. **Turn 4 (Contextual Follow-up & High-Value Damage Handover):**  
-   - Customer: `"Is TV ka screen toota hua nikla, turant refund ya replacement approve kar do."`  
+4. **Turn 4 (Contextual Follow-up on Order Status):**  
+   - Customer: `"Is order ka delivery status kya hai?"`  
+   - Assistant: Answers directly from verified context without re-asking for order number or details.
+5. **Turn 5 (High-Value Damage Escalation & Handover):**  
+   - Customer: `"Is TV ka screen toota hua nikla, turant replacement approve kar do."`  
    - Assistant: Detects damaged item worth > ₹10,000 (`DWM-3`), creates ticket `create_ticket()` with summary, refuses unauthorized immediate payouts (`ESC-4`), and safely hands over to the Priority Resolution team.
 
 **Voiceover Narration:**  
-> *"In Step 3, our multi-turn stateful agent manages dialogue context and strict caller authentication. When the order number is first shared, zero private data is leaked until the caller provides their registered phone suffix or pincode. Once verified, when the caller reports damage on a television exceeding ₹10,000, the agent adheres to policy: it refuses unapproved compensation, raises a support ticket, and escalates directly to human colleagues."*
+> *"In Step 3, our multi-turn stateful agent manages dialogue context and strict caller authentication. When the order number is first shared, zero private data is leaked until the caller provides their registered phone suffix or pincode. Once verified, follow-up queries on delivery status resolve seamlessly from dialogue state. When the caller reports damage on a television exceeding ₹10,000, the agent adheres to policy: it refuses unapproved compensation, raises a support ticket, and escalates directly to human colleagues."*
 
 ---
 

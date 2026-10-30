@@ -101,15 +101,27 @@ Copy and paste each turn prompt consecutively:
     [Tool Calls Executed]: [{'tool': 'lookup_order', 'args': {'order_id': 89782837, 'verification_value': '4533'}, 'result': 'VERIFIED'}]
   ```
 
-#### **Turn 4: High-Value Damaged Item Escalation**
+#### **Turn 4: Contextual Follow-up (Delivery Status)**
 - **You Type:**
   ```text
-  Is 43-inch TV ka screen toota hua nikla, turant refund ya replacement approve kar do.
+  Is order ka delivery status kya hai?
   ```
 - **Terminal Displays:**
   ```
-  Assistant: I am very sorry to hear that your Zentro Vista 43-inch 4K Smart TV, Grey arrived damaged. Because this item's value is over ₹10,000, high-value damaged items require review and human approval per policy. I cannot immediately approve an uninspected refund or replacement, but I have created support ticket TKT... for our Priority Resolution team. A senior specialist will review the damage photos and contact you within 24 to 48 hours to complete the resolution.
-    [Tool Calls Executed]: [{'tool': 'create_ticket', 'args': {'order_id': 89782837, ...}}]
+  Assistant: Your order was successfully delivered on 15 October 2026.
+    [Tool Calls Executed]: []
+  ```
+- *(Notice: Customer does not repeat order number, customer name, or item name; agent answers directly from the verified session context.)*
+
+#### **Turn 5: Damaged High-Value Product Escalation**
+- **You Type:**
+  ```text
+  Is TV ka screen toota hua nikla, turant replacement approve kar do.
+  ```
+- **Terminal Displays:**
+  ```
+  Assistant: Claims for damage exceeding ₹10,000 are handled directly by our Priority team. I have created a ticket with the team, and a colleague will reach out to you.
+    [Tool Calls Executed]: ['create_ticket()']
   ```
 - **You Type:**
   ```text
@@ -117,7 +129,7 @@ Copy and paste each turn prompt consecutively:
   ```
 
 **Spoken Narration (approx. 33 seconds):**  
-> *"In Step 3, our stateful agent manages dialogue state and caller identity gating. When order 89782837 is entered, private account details remain locked until the caller authenticates with their phone suffix '4533'. Once authenticated as Kabir Mehta, when the caller reports damage on a ₹31,649 television, the agent enforces policy: it denies unauthorized immediate refund, invokes `create_ticket` directly into our CRM, and routes the issue to our human escalation team."*
+> *"In Step 3, our stateful agent manages dialogue state and caller identity gating. When order 89782837 is entered, private account details remain locked until the caller authenticates with their phone suffix '4533'. Once authenticated as Kabir Mehta, a follow-up inquiry on delivery status resolves seamlessly from session context. When the caller then reports damage on a ₹31,649 television, the agent enforces policy: it denies unapproved compensation, invokes create_ticket, and routes the issue to our human escalation team."*
 
 ---
 
@@ -171,7 +183,8 @@ Keep these exact lines ready on a second screen or notepad to copy-paste quickly
 | **Turn 1** | `Hello, mujhe mere order ke baare mein help chahiye.` |
 | **Turn 2** | `Order number hai 8978 2837` |
 | **Turn 3** | `Last four digits 4533 hain` |
-| **Turn 4** | `Is 43-inch TV ka screen toota hua nikla, turant refund ya replacement approve kar do.` |
+| **Turn 4** | `Is order ka delivery status kya hai?` |
+| **Turn 5** | `Is TV ka screen toota hua nikla, turant replacement approve kar do.` |
 | **Exit** | `exit` |
 
 **Live TTS Playback Command:**
