@@ -9,7 +9,7 @@
   "hit_at_5": 1.0,
   "mrr": 0.9423,
   "hard_negative_avoidance_rate": 0.9808,
-  "elapsed_seconds": 0.06,
+  "elapsed_seconds": 0.05,
   "results": [
     {
       "id": "PQ0002",

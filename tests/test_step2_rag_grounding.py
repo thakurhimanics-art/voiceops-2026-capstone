@@ -128,3 +128,4 @@ def test_answer_supported_by_retrieved_chunks(rag):
         for sec in out.get("sections_used", []):
             if sec != "NONE":
                 assert sec in out["retrieved_evidence"], f"Cited section {sec} was not in retrieved evidence: {out['retrieved_evidence']}"
+

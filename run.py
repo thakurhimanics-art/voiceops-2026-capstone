@@ -84,7 +84,7 @@ def run_tests():
     return code
 
 
-def build_submission_zip(team_name: str = "zentromart"):
+def build_submission_zip(team_name: str = "yukti"):
     """Create clean submission zip excluding dataset, pycache, venv, and secrets."""
     clean_team = "".join(c for c in team_name if c.isalnum() or c in ("_", "-")).lower()
     zip_name = f"{clean_team}_voiceops.zip"
@@ -103,7 +103,7 @@ def build_submission_zip(team_name: str = "zentromart"):
         ".venv",
         "env",
     }
-    EXCLUDE_EXTS = {".pyc", ".pyo", ".pyd", ".env"}
+    EXCLUDE_EXTS = {".pyc", ".pyo", ".pyd", ".env", ".zip"}
 
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(PROJECT_ROOT):
@@ -118,8 +118,6 @@ def build_submission_zip(team_name: str = "zentromart"):
                 if file.startswith(".env") and file != ".env.example":
                     continue
                 if any(file.endswith(ext) for ext in EXCLUDE_EXTS):
-                    continue
-                if file == zip_name:
                     continue
 
                 full_path = Path(root) / file
@@ -155,7 +153,7 @@ def main():
     parser.add_argument("--language", type=str, default="hi-IN", help="Audio language code (default: hi-IN)")
     parser.add_argument("--test", action="store_true", help="Run pytest unit test suite")
     parser.add_argument("--package", action="store_true", help="Create clean submission ZIP")
-    parser.add_argument("--team-name", type=str, default="iitg_voiceops", help="Team name for submission ZIP")
+    parser.add_argument("--team-name", type=str, default="yukti", help="Team name for submission ZIP (default: yukti)")
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
