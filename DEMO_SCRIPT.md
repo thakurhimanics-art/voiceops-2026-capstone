@@ -29,7 +29,7 @@ Point to the console output:
 `PASS — all 9 CSVs, 21 KB documents, primary/foreign keys, order math, practice evidence, verification gates and company naming validated.`
 
 **Voiceover Narration:**  
-> *"Welcome to the ZentroMart VoiceOps 2026 capstone presentation for IIT Guwahati and Gnani.ai. We begin by verifying our source of truth on the fixed reference date of 20 October 2026: all 9 CSV tables, 21 policy documents, and relational keys pass full structural validation with zero errors."*
+> *"Welcome to the ZentroMart VoiceOps 2026 capstone presentation for IIT Guwahati and Gnani.ai. I am Himani Thakur, presenting my individual capstone implementation. We begin by verifying our source of truth on the fixed reference date of 20 October 2026: all 9 CSV tables, 21 policy documents, and relational keys pass full structural validation with zero errors."*
 
 ---
 
@@ -103,14 +103,14 @@ Display the generated manifest and normalized speech text:
 Run test suite and packaging:
 ```bash
 python run.py --test
-python run.py --package --team-name zentromart
+python run.py --package
 ```
 
 **Action:**  
 Show all 52 unit tests passing, clean ZIP packaging with zero secret leaks, and display `report.pdf`.
 
 **Voiceover Narration:**  
-> *"All 52 unit tests pass across our business rules, retrieval engine, verification gates, and voice normalizer. The automated package command verifies zero credential or dataset leakage. Thank you."*
+> *"All 52 unit tests pass across business rules, retrieval engine, verification gates, and voice normalizer. The automated package command verifies zero credential or dataset leakage, creating the final submission package himani_thakur_voiceops.zip. Thank you."*
 
 ---
 

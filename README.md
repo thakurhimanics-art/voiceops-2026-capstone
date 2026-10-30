@@ -2,7 +2,9 @@
 
 Comprehensive AI Customer Support Agent with Policy-Grounded RAG, Identity-Gated Multi-Turn Dialogue, and Gnani.ai Voice Capabilities.
 
-Built for **VoiceOps 2026** by Consulting & Analytics Club, IIT Guwahati × Gnani.ai.
+**Competition:** VoiceOps 2026 — Consulting & Analytics Club, IIT Guwahati × Gnani.ai  
+**Author / Developer:** Himani Thakur (Individual Capstone Project)  
+**Reference Date:** 20 October 2026  
 
 ---
 
@@ -151,11 +153,11 @@ python run.py --voice-batch --input-dir sample_inputs/audio_sample/
 Output files, synthesized audio responses, and `batch_manifest.json` are saved to `results/voice_batch_output/`.
 
 ### 6. Package Submission ZIP
-Generate a clean, rubric-compliant submission archive:
+Generate a clean, rubric-compliant submission archive (`himani_thakur_voiceops.zip`):
 ```bash
-python run.py --package --team-name zentromart
+python run.py --package
 ```
-Automatically packages required deliverables and excludes the dataset, `.env` secrets, `.git`, cache folders, and virtual environments.
+Automatically packages required deliverables into `himani_thakur_voiceops.zip` and excludes the dataset, `.env` secrets, `.git`, cache folders, and virtual environments.
 
 ---
 

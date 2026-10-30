@@ -33,7 +33,7 @@ PASS — all 9 CSVs, 21 KB documents, primary/foreign keys, order math, practice
 ```
 
 **Spoken Narration (approx. 18 seconds):**  
-> *"Welcome to the ZentroMart VoiceOps 2026 capstone presentation. We anchor all operational logic on our fixed reference date of 20 October 2026. Running our dataset validator confirms all 9 relational tables, 21 policy documents, and data integrity constraints pass structural validation with zero errors."*
+> *"Welcome to the ZentroMart VoiceOps 2026 capstone presentation for IIT Guwahati and Gnani.ai. I am Himani Thakur, presenting my individual capstone implementation. We anchor all operational logic on our fixed reference date of 20 October 2026. Running our dataset validator confirms all 9 relational tables, 21 policy documents, and data integrity constraints pass structural validation with zero errors."*
 
 ---
 
@@ -158,7 +158,7 @@ python run.py --test
 Quickly show that `report.pdf` is present and exactly 4 pages.
 
 **Spoken Narration (approx. 15 seconds):**  
-> *"All 52 unit tests pass in under one second across business rules, retrieval grounding, verification security, and voice normalization. Our concise four-page technical report and submission archive are fully verified. Thank you."*
+> *"All 52 unit tests pass in under one second across business rules, retrieval grounding, verification security, and voice normalization. The packaging tool creates himani_thakur_voiceops.zip, and my four-page technical report and submission archive are fully verified. Thank you."*
 
 ---
 
@@ -188,3 +188,4 @@ Keep these exact lines ready on a second screen or notepad to copy-paste quickly
 3. Save output file as:
    `C:\Users\Himani Thakur\Desktop\VoiceOps\demo.mp4`
 4. Confirm file size is under 50 MB for easy upload/submission.
+

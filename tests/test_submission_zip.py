@@ -5,10 +5,10 @@ from src.config import PROJECT_ROOT
 
 
 def test_submission_zip_exists_and_clean():
-    zip_path = PROJECT_ROOT / "yukti_voiceops.zip"
+    zip_path = PROJECT_ROOT / "himani_thakur_voiceops.zip"
     if not zip_path.exists():
         zip_path = PROJECT_ROOT / "zentromart_voiceops.zip"
-    assert zip_path.exists(), f"Submission ZIP (yukti_voiceops.zip or zentromart_voiceops.zip) must exist"
+    assert zip_path.exists(), f"Submission ZIP (himani_thakur_voiceops.zip) must exist"
     assert zip_path.stat().st_size > 1000, "ZIP must not be empty"
 
     with zipfile.ZipFile(zip_path, "r") as z:

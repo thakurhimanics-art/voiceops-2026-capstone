@@ -1,6 +1,7 @@
 # VoiceOps 2026 Capstone Report: ZentroMart AI Customer Support System
 
 **Competition:** VoiceOps 2026 — Consulting & Analytics Club, IIT Guwahati × Gnani.ai  
+**Author:** Himani Thakur (Individual Capstone Project)  
 **Reference Date:** 20 October 2026  
 **Stack:** Python 3.12, Local Multilingual LLM (Qwen 2.5 3B), Gnani.ai Speech AI REST SDK (`gnani-vachana`), Hybrid Dense/Lexical BM25 RAG  
 
@@ -8,7 +9,7 @@
 
 ## 1. Problem Statement & Solution Overview
 
-ZentroMart is a fictional Indian e-commerce enterprise handling customer inquiries across chat, email, and voice channels. This report presents an end-to-end, reproducible implementation of the four-step architecture required by the Capstone specification, strictly adhering to dataset constraints, policy precedence hierarchies, business-day calendars, and identity-gated tool boundaries.
+ZentroMart is a fictional Indian e-commerce enterprise handling customer inquiries across chat, email, and voice channels. This report presents an end-to-end, reproducible individual implementation of the four-step architecture required by the Capstone specification, strictly adhering to dataset constraints, policy precedence hierarchies, business-day calendars, and identity-gated tool boundaries.
 
 ```
 +-------------------------------------------------------------------------------------------------+

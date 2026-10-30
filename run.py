@@ -5,7 +5,7 @@ Supports:
 - Interactive Chat: --chat
 - Voice Batch Processing: --voice-batch --input-dir <dir> [--output-dir <dir>]
 - Testing: --test
-- Packaging: --package [--team-name <name>]
+- Packaging: --package [--name <name>]
 """
 import argparse
 import sys
@@ -84,10 +84,10 @@ def run_tests():
     return code
 
 
-def build_submission_zip(team_name: str = "yukti"):
+def build_submission_zip(submission_name: str = "himani_thakur"):
     """Create clean submission zip excluding dataset, pycache, venv, and secrets."""
-    clean_team = "".join(c for c in team_name if c.isalnum() or c in ("_", "-")).lower()
-    zip_name = f"{clean_team}_voiceops.zip"
+    clean_name = "".join(c for c in submission_name if c.isalnum() or c in ("_", "-")).lower()
+    zip_name = f"{clean_name}_voiceops.zip"
     zip_path = PROJECT_ROOT / zip_name
 
     print(f"\nPackaging clean submission archive: {zip_name}...")
@@ -153,7 +153,7 @@ def main():
     parser.add_argument("--language", type=str, default="hi-IN", help="Audio language code (default: hi-IN)")
     parser.add_argument("--test", action="store_true", help="Run pytest unit test suite")
     parser.add_argument("--package", action="store_true", help="Create clean submission ZIP")
-    parser.add_argument("--team-name", type=str, default="yukti", help="Team name for submission ZIP (default: yukti)")
+    parser.add_argument("--submission-name", "--name", "--team-name", dest="submission_name", type=str, default="himani_thakur", help="Submission name prefix for ZIP (default: himani_thakur)")
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
@@ -174,7 +174,7 @@ def main():
         code = run_tests()
         sys.exit(code)
     elif args.package:
-        build_submission_zip(args.team_name)
+        build_submission_zip(args.submission_name)
     else:
         parser.print_help()
 
