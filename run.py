@@ -6,6 +6,7 @@ Supports:
 - Voice Batch Processing: --voice-batch --input-dir <dir> [--output-dir <dir>]
 - Testing: --test
 - Packaging: --package [--name <name>]
+- Show Verified STT Result: --show-stt
 """
 import argparse
 import sys
@@ -154,6 +155,7 @@ def main():
     parser.add_argument("--test", action="store_true", help="Run pytest unit test suite")
     parser.add_argument("--package", action="store_true", help="Create clean submission ZIP")
     parser.add_argument("--submission-name", "--name", "--team-name", dest="submission_name", type=str, default="himani_thakur", help="Submission name prefix for ZIP (default: himani_thakur)")
+    parser.add_argument("--show-stt", action="store_true", help="Display verified historical live Gnani STT result (read-only)")
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
@@ -170,6 +172,9 @@ def main():
             print("Error: --input-dir is required when using --voice-batch")
             sys.exit(1)
         run_voice_batch(args.input_dir, args.output_dir, args.language)
+    elif args.show_stt:
+        from src.step4_voice.show_stt_result import show_verified_stt
+        show_verified_stt()
     elif args.test:
         code = run_tests()
         sys.exit(code)
