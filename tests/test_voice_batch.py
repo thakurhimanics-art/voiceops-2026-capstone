@@ -273,3 +273,52 @@ def test_batch_processor_ignores_non_audio_files(tmp_path):
     assert manifest["total_files"] == 0
     assert manifest["success_count"] == 0
     assert manifest["failed_count"] == 0
+
+
+def test_batch_processor_with_real_agent_grounded_rag(tmp_path):
+    """Test full pipeline using the actual ZentroMartAgent and RAG retriever with mock speech IO."""
+    from src.step3_agent.agent import ZentroMartAgent
+    
+    in_dir = tmp_path / "audio_input"
+    out_dir = tmp_path / "audio_output"
+    in_dir.mkdir()
+
+    # Create dummy audio file
+    dummy_wav = in_dir / "query_return_policy.wav"
+    dummy_wav.write_bytes(b"RIFF_FAKE_AUDIO_FOR_TEST")
+
+    # Mock client returns a real customer query about return policy
+    mock_client = MockGnaniClient(
+        stt_response={
+            "success": True,
+            "status": "success",
+            "transcript": "What is the return policy for electronics?",
+            "request_id": "test_req_mock_123"
+        },
+        tts_response={
+            "success": True,
+            "status": "success",
+            "output_path": str(out_dir / "reply_query_return_policy.wav"),
+            "bytes_written": 44
+        }
+    )
+
+    real_agent = ZentroMartAgent()
+    processor = VoiceBatchProcessor(gnani_client=mock_client, agent=real_agent)
+    manifest = processor.process_folder(input_dir=str(in_dir), output_dir=str(out_dir), language_code="en-IN")
+
+    assert manifest["total_files"] == 1
+    assert manifest["success_count"] == 1
+    assert manifest["failed_count"] == 0
+
+    record = manifest["files"][0]
+    assert record["status"] == "success"
+    assert record["transcription"] == "What is the return policy for electronics?"
+    assert len(record["generated_text_reply"]) > 0
+    assert len(record["spoken_text_reply"]) > 0
+    assert "retrieved_sources" in record
+    assert "retrieved_section_ids" in record
+    assert len(record["retrieved_section_ids"]) > 0
+    assert "STY-1" in record["retrieved_section_ids"]
+    assert (out_dir / "result_query_return_policy.json").exists()
+    assert (out_dir / "batch_manifest.json").exists()

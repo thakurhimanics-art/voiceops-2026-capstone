@@ -21,6 +21,7 @@ def test_submission_zip_exists_and_clean():
         assert "demo.mp4" in names, "demo.mp4 must be in ZIP"
         assert "requirements.txt" in names, "requirements.txt must be in ZIP"
         assert "run.py" in names, "run.py must be in ZIP"
+        assert "run.sh" in names, "run.sh must be in ZIP"
         assert ".env.example" in names, ".env.example must be in ZIP"
         assert any(n.startswith("src/") for n in names), "src/ must be in ZIP"
         assert any(n.startswith("eval/") for n in names), "eval/ must be in ZIP"
@@ -32,6 +33,7 @@ def test_submission_zip_exists_and_clean():
             assert "Capstone_Project_Dataset_FTTT_2026" not in n, f"Dataset leaked into ZIP: {n}"
             assert "__pycache__" not in n, f"Cache leaked into ZIP: {n}"
             assert ".pytest_cache" not in n, f"Pytest cache leaked into ZIP: {n}"
+            assert "REPORT.html" not in n, f"Intermediate HTML leaked into ZIP: {n}"
             assert "venv" not in n.split("/")[0], f"Virtualenv leaked into ZIP: {n}"
             if n.startswith(".env") and n != ".env.example":
                 assert False, f"Secret .env file leaked into ZIP: {n}"

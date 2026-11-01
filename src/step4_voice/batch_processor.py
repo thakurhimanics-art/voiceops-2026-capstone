@@ -138,6 +138,8 @@ class VoiceBatchProcessor:
                 "spoken_text_reply": spoken_reply,
                 "output_audio_path": output_audio_path,
                 "retrieved_section_ids": retrieved_ids,
+                "retrieved_sources": retrieved_ids,
+                "retrieved_chunks": retrieved_ids,
                 "decision": decision,
                 "error_message": error_msg
             }
@@ -160,6 +162,8 @@ class VoiceBatchProcessor:
                 "spoken_text_reply": "",
                 "output_audio_path": None,
                 "retrieved_section_ids": [],
+                "retrieved_sources": [],
+                "retrieved_chunks": [],
                 "decision": "error",
                 "error_message": f"Unsupported file extension '{u_file.suffix}'. Supported: {sorted(AUDIO_EXTENSIONS)}"
             })

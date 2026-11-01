@@ -105,6 +105,7 @@ def build_submission_zip(submission_name: str = "himani_thakur"):
         "env",
     }
     EXCLUDE_EXTS = {".pyc", ".pyo", ".pyd", ".env", ".zip"}
+    EXCLUDE_FILES = {"REPORT.html", ".DS_Store", "Thumbs.db"}
 
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(PROJECT_ROOT):
@@ -117,6 +118,8 @@ def build_submission_zip(submission_name: str = "himani_thakur"):
 
             for file in files:
                 if file.startswith(".env") and file != ".env.example":
+                    continue
+                if file in EXCLUDE_FILES:
                     continue
                 if any(file.endswith(ext) for ext in EXCLUDE_EXTS):
                     continue
@@ -146,10 +149,11 @@ def main():
         description="ZentroMart VoiceOps 2026 Capstone Submission Runner",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
+    parser.add_argument("input_folder", nargs="?", default=None, help="Input directory containing customer audio files (batch processing)")
     parser.add_argument("--eval", choices=["step1", "step2", "step3", "all"], help="Run evaluation for Step 1, 2, 3, or all")
     parser.add_argument("--chat", action="store_true", help="Start interactive CLI support chat")
     parser.add_argument("--voice-batch", action="store_true", help="Process folder of customer audio files")
-    parser.add_argument("--input-dir", type=str, help="Input directory containing customer audio files")
+    parser.add_argument("--input-dir", type=str, default=None, help="Input directory containing customer audio files")
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory for transcriptions and audio replies")
     parser.add_argument("--language", type=str, default="hi-IN", help="Audio language code (default: hi-IN)")
     parser.add_argument("--test", action="store_true", help="Run pytest unit test suite")
@@ -163,15 +167,19 @@ def main():
 
     args = parser.parse_args()
 
+    # Determine batch folder if passed positionally or via flag
+    batch_dir = args.input_dir or (args.input_folder if args.input_folder and not args.input_folder.startswith("-") else None)
+
     if args.eval:
         run_evaluation(args.eval)
     elif args.chat:
         run_interactive_chat()
-    elif args.voice_batch:
-        if not args.input_dir:
-            print("Error: --input-dir is required when using --voice-batch")
+    elif args.voice_batch or batch_dir:
+        if not batch_dir:
+            print("Error: Input directory is required for voice batch processing.")
+            print("Usage: python run.py <path_to_audio_folder> OR python run.py --voice-batch --input-dir <path>")
             sys.exit(1)
-        run_voice_batch(args.input_dir, args.output_dir, args.language)
+        run_voice_batch(batch_dir, args.output_dir, args.language)
     elif args.show_stt:
         from src.step4_voice.show_stt_result import show_verified_stt
         show_verified_stt()

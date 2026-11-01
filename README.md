@@ -4,6 +4,7 @@ Comprehensive AI Customer Support Agent with Policy-Grounded RAG, Identity-Gated
 
 **Competition:** VoiceOps 2026 — Consulting & Analytics Club, IIT Guwahati × Gnani.ai  
 **Author / Developer:** Himani Thakur (Individual Capstone Project)  
+**Public GitHub Repository:** https://github.com/thakurhimanics-art/voiceops-2026-capstone  
 **Reference Date:** 20 October 2026  
 
 ---
@@ -60,7 +61,7 @@ VoiceOps/
 ├── results/                              # Evaluation outputs and batch manifests (JSON)
 ├── sample_outputs/                       # Pre-generated sample outputs
 ├── sample_inputs/                        # Sample input audio for batch demonstration
-├── run.py                                # Unified CLI entry point
+├── run.py / run.sh                       # Unified CLI entry point (cross-platform)
 ├── generate_report_pdf.py                # Compiles report.pdf from REPORT.md
 ├── requirements.txt                      # Project dependencies
 ├── .env.example                          # Environment configuration template
@@ -146,11 +147,15 @@ python run.py --chat
 ```
 
 ### 5. Step 4 Voice Batch Processing
-Process an entire folder of audio files (`.wav`, `.mp3`, `.m4a`, etc.):
+Process an entire folder of customer audio files (`.wav`, `.mp3`, `.m4a`, etc.). The runner transcribes each customer voice message with Gnani STT, executes the ZentroMart agent, normalizes the text response per STY-3, synthesizes audio replies with Gnani TTS, and saves reply audio, reply text, and retrieved policy chunks:
 ```bash
+# Standard batch command (accepts input folder directly):
+python run.py sample_inputs/audio_sample/
+
+# Or via explicit flags:
 python run.py --voice-batch --input-dir sample_inputs/audio_sample/
 ```
-Output files, synthesized audio responses, and `batch_manifest.json` are saved to `results/voice_batch_output/`.
+Output synthesized audio responses (`reply_*.wav`), per-file JSON records with retrieved source chunks, and `batch_manifest.json` are written to `results/voice_batch_output/`.
 
 ### 6. Package Submission ZIP
 Generate a clean, rubric-compliant submission archive (`himani_thakur_voiceops.zip`):
