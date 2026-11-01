@@ -254,10 +254,11 @@ class ZentroMartAgent:
                 session.ticket_id = res.get("ticket_id")
 
                 if esc_reason == "high_value_damage":
+                    tkt_id = res.get("ticket_id")
                     if is_hindi:
-                        reply = f"₹10,000 se zyada ke damage claim Priority Resolution team dekhti hai. Maine ticket raise kar diya hai, team colleague aapse sampark karenge."
+                        reply = f"₹10,000 se zyada mulyawan item ke damage claim par turant bina review approval nahi diya ja sakta (DWM-3, ESC-4). Maine ticket ({tkt_id}) raise kar diya hai, Priority Resolution team ke colleague aapse sampark karenge."
                     else:
-                        reply = f"Claims for damage exceeding ₹10,000 are handled directly by our Priority team. I have created a ticket with the team, and a colleague will reach out to you."
+                        reply = f"Damage claims for items exceeding ₹10,000 require review and cannot be immediately approved per policy (DWM-3, ESC-4). I have created a priority ticket ({tkt_id}) for our Priority Resolution team, and a colleague will contact you to resolve this."
                 elif esc_reason == "repeat_contact":
                     if is_hindi:
                         reply = f"Aap is hafte teesri baar call kar rahe hain, isliye maine hamari team ke colleague ke saath priority ticket raise kar diya hai. Wo jald hi call karenge."
@@ -442,7 +443,54 @@ class ZentroMartAgent:
                 "session_state": session.verification_status
             }
 
-        # E. Return Eligibility & Window
+        # E1. Return Initiation / How to Apply (RVP-1, RET-4)
+        is_how_to_return = (
+            any(w in msg_lower for w in [
+                "kaise return", "how to return", "how do i return", "apply kaise",
+                "kaise apply", "how to apply", "return process", "return kaise",
+                "initiate kaise", "how to initiate", "kahan se return", "kahan apply"
+            ])
+            or ((any(w in msg_lower for w in ["apply", "kaise", "process", "steps", "slot"]) or any(w in customer_message for w in ["कैसे", "कहाँ"]))
+                and any(w in msg_lower for w in ["return", "wapas", "waapas", "lautana", "वापस"]))
+        )
+        if is_how_to_return:
+            decision = "answer"
+            evidence_cited.extend(["RVP-1", "RET-4"])
+            if is_hindi:
+                reply = "Return apply karne ke liye ZentroMart app ya website mein 'My Orders' section mein jayein, apna order chunein, 'Return' par click karein aur pickup slot book karein [RVP-1]. Doorstep pickup ke samay delivery executive item check karega [RET-4]."
+            else:
+                reply = "To apply for a return, go to 'My Orders' in the ZentroMart app or website, select your order, click 'Return', and choose a pickup slot [RVP-1]. The courier executive will verify the item condition at your doorstep [RET-4]."
+            session.add_turn("assistant", reply)
+            return {
+                "decision": decision,
+                "reply": reply,
+                "tool_calls": tool_calls_executed,
+                "gold_evidence": evidence_cited,
+                "session_state": session.verification_status
+            }
+
+        # E2. Refund Request on Delivered Order (REF-1, RVP-1)
+        is_refund_request = any(w in msg_lower for w in [
+            "refund chahiye", "want refund", "mujhe refund", "refund do",
+            "refund request", "paise wapas", "refund please", "रिफ़ंड चाहिए", "रिफंड चाहिए"
+        ])
+        if is_refund_request:
+            decision = "answer"
+            evidence_cited.extend(["REF-1", "REF-2", "RVP-1"])
+            if is_hindi:
+                reply = "Delivered item par refund ke liye 'My Orders' se return initiate karein [RVP-1]. Item pickup hone aur quality check pass hone ke 2 business days ke andar refund aapke original payment method mein initiate kar diya jaata hai [REF-1, REF-2]."
+            else:
+                reply = "To get a refund for a delivered item, please initiate a return through 'My Orders' [RVP-1]. Once the item is collected via reverse pickup and passes quality check, your refund will be initiated within 2 business days [REF-1, REF-2]."
+            session.add_turn("assistant", reply)
+            return {
+                "decision": decision,
+                "reply": reply,
+                "tool_calls": tool_calls_executed,
+                "gold_evidence": evidence_cited,
+                "session_state": session.verification_status
+            }
+
+        # E3. Return Eligibility & Window (RET-2, RET-6)
         if any(w in msg_lower for w in ["return", "wapas", "waapas", "lautana", "वापस"]):
             decision = "answer"
             evidence_cited.append("RET-2")

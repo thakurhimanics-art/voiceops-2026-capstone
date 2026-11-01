@@ -51,8 +51,18 @@ class PolicyRules:
             return True, "product_safety", "Critical safety hazard reported (battery swelling, heat, or fire risk)."
 
         # Trigger 1: Damaged, defective or wrong item worth > ₹10,000 (DWM-3, ESC-1)
-        is_damage_query = any(w in msg_lower for w in ["damage", "broken", "defective", "kharab", "toota", "damaged", "replacement approve", "approve", "खराब", "टूटा"])
-        if order_data and is_damage_query:
+        damage_keywords = [
+            "damage", "damaged", "broken", "broke", "crack", "cracked", "defect",
+            "defective", "faulty", "shattered", "smashed", "dented", "scratched",
+            "not working", "screen broke", "screen broken", "screen cracked",
+            "toota", "tooti", "toote", "toot", "tuta", "tuti", "tute", "tut",
+            "kharab", "kharaab", "khrab", "phoota", "phoot", "phuta",
+            "खराब", "टूटा", "टूटी", "टूटे", "टूट", "डैमेज", "क्रैक", "दोषपूर्ण"
+        ]
+        is_damage_query = any(w in msg_lower for w in damage_keywords) or any(w in customer_message for w in ["टूटा", "टूटी", "खराब", "टूट", "डैमेज"])
+        is_replacement_query = any(w in msg_lower for w in ["replacement", "replace", "badal", "badlo"])
+        
+        if order_data and (is_damage_query or (is_replacement_query and any(w in msg_lower for w in ["tuta", "toot", "kharab", "broken", "damage", "faulty", "krdo", "kar do", "approve"]))):
             items = order_data.get("items", [])
             for it in items:
                 price = int(it.get("unit_price_inr", 0))

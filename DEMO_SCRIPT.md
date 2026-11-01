@@ -73,7 +73,7 @@ python run.py --chat
    - Customer: `"Is order ka delivery status kya hai?"`  
    - Assistant: Answers directly from verified context without re-asking for order number or details.
 5. **Turn 5 (High-Value Damage Escalation & Handover):**  
-   - Customer: `"Is TV ka screen toota hua nikla, turant replacement approve kar do."`  
+   - Customer: `"mere Tv ka screen tuta hua h please replacement krdo"` *(or "Is TV ka screen toota hua nikla, turant replacement approve kar do")*  
    - Assistant: Detects damaged item worth > ₹10,000 (`DWM-3`), creates ticket `create_ticket()` with summary, refuses unauthorized immediate payouts (`ESC-4`), and safely hands over to the Priority Resolution team.
 
 **Voiceover Narration:**  
@@ -110,10 +110,10 @@ python run.py --package
 ```
 
 **Action:**  
-Show all 52 unit tests passing, clean ZIP packaging with zero secret leaks, and display `report.pdf`.
+Show all 57 unit tests passing, clean ZIP packaging with zero secret leaks, and display `report.pdf`.
 
 **Voiceover Narration:**  
-> *"All 52 unit tests pass across business rules, retrieval engine, verification gates, and voice normalizer. The automated package command verifies zero credential or dataset leakage, creating the final submission package himani_thakur_voiceops.zip. Thank you."*
+> *"All 57 unit tests pass across business rules, retrieval engine, verification gates, and voice normalizer. The automated package command verifies zero credential or dataset leakage, creating the final submission package himani_thakur_voiceops.zip. Thank you."*
 
 ---
 

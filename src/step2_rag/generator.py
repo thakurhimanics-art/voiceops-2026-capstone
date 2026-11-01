@@ -139,7 +139,11 @@ class Step2RAG:
                 product_price = int(m_price.group(1).replace(",", ""))
 
         # 6. High-Value Damage Escalation Check (DWM-3, ESC-1)
-        is_damage_reported = any(w in q_lower for w in ["crack", "cracked", "broken", "damage", "damaged", "टूट", "टूटा", "खराब", "torn"])
+        is_damage_reported = any(w in q_lower for w in [
+            "crack", "cracked", "broken", "broke", "damage", "damaged",
+            "toota", "tooti", "toot", "tuta", "tuti", "tut", "kharab",
+            "defect", "defective", "faulty", "shattered", "टूट", "टूटा", "खराब", "torn"
+        ])
         if is_damage_reported and (product_price > 10000 or any(c["section_id"] == "DWM-3" for c in retrieved_chunks[:2]) or any(w in q_lower for w in ["tv", "television", "laptop", "24,000", "12,000"])):
             sku_cite = f"products.csv:{product_sku}" if product_sku else None
             used_secs = ["DWM-3", "ESC-1"]

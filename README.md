@@ -113,7 +113,7 @@ VoiceOps/
 ```bash
 python run.py --test
 ```
-Executes all **52 unit tests** verifying business rules, return windows, precedence filtering, identity gating, RAG grounding, voice normalization, and mock batch processing.
+Executes all **57 unit tests** verifying business rules, return windows, precedence filtering, identity gating, RAG grounding, voice normalization, mock batch processing, and escalation regression.
 
 ### 2. Run Dataset Validation
 ```bash
@@ -169,7 +169,7 @@ Automatically packages required deliverables into `himani_thakur_voiceops.zip` a
 | **Step 1 Baseline** | Decision Accuracy<br>Mean Fact Score<br>Trap Safety Rate | 71.2%<br>19.9%<br>100.0% |
 | **Step 2 Grounded RAG** | Retrieval Hit@1<br>Retrieval Hit@3<br>Retrieval Hit@5<br>Decision Accuracy<br>Mean Fact Score | **90.4%**<br>**100.0%**<br>**100.0%**<br>**100.0%**<br>**100.0%** |
 | **Step 3 Multi-Turn Agent** | Conversation Pass Rate<br>Turn Decision Accuracy<br>Tool Invocation Accuracy<br>Fact Score | **100.0% (23/23)**<br>**100.0% (96/96)**<br>**100.0% (54/54)**<br>**100.0%** |
-| **Unit Test Suite** | 52 unit tests passing | **100% (52 / 52)** |
+| **Unit Test Suite** | 57 unit tests passing | **100% (57 / 57)** |
 
 ---
 

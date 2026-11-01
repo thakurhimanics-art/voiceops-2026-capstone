@@ -116,11 +116,12 @@ Copy and paste each turn prompt consecutively:
 #### **Turn 5: Damaged High-Value Product Escalation**
 - **You Type:**
   ```text
-  Is TV ka screen toota hua nikla, turant replacement approve kar do.
+  mere Tv ka screen tuta hua h please replacement krdo
   ```
+  *(Natural variations like "My TV screen arrived broken. Please replace it." or "Mere TV ka screen toot gaya hai" also fully supported)*
 - **Terminal Displays:**
   ```
-  Assistant: Claims for damage exceeding ₹10,000 are handled directly by our Priority team. I have created a ticket with the team, and a colleague will reach out to you.
+  Assistant: Damage claims for items exceeding ₹10,000 require review and cannot be immediately approved per policy (DWM-3, ESC-4). I have created a priority ticket (TKT...) for our Priority Resolution team, and a colleague will contact you to resolve this.
     [Tool Calls Executed]: ['create_ticket()']
   ```
 - **You Type:**
@@ -129,7 +130,7 @@ Copy and paste each turn prompt consecutively:
   ```
 
 **Spoken Narration (approx. 33 seconds):**  
-> *"In Step 3, our stateful agent manages dialogue state and caller identity gating. When order 89782837 is entered, private account details remain locked until the caller authenticates with their phone suffix '4533'. Once authenticated as Kabir Mehta, a follow-up inquiry on delivery status resolves seamlessly from session context. When the caller then reports damage on a ₹31,649 television, the agent enforces policy: it denies unapproved compensation, invokes create_ticket, and routes the issue to our human escalation team."*
+> *"In Step 3, our stateful agent manages dialogue state and caller identity gating. When order 89782837 is entered, private account details remain locked until the caller authenticates with their phone suffix '4533'. Once authenticated as Kabir Mehta, a follow-up inquiry on delivery status resolves seamlessly from session context. When the caller reports damage on a ₹31,649 television, the agent enforces policy: it denies unapproved compensation, invokes create_ticket, and routes the issue to our human escalation team."*
 
 ---
 
@@ -138,7 +139,7 @@ Copy and paste each turn prompt consecutively:
 **On-Screen Action:**  
 Demonstrate the voice pipeline speech normalizer and play the verified live Gnani TTS synthesis:
 ```powershell
-powershell -Command "(New-Object System.Media.SoundPlayer 'sample_outputs\live_gnani_tts_test.wav').PlaySync()"
+powershell -Command "(New-Object System.Media.SoundPlayer ((Resolve-Path 'sample_outputs\live_gnani_tts_playback.wav').Path)).PlaySync()"
 ```
 *(Or run the batch voice processor)*:
 ```powershell
@@ -164,13 +165,13 @@ python run.py --test
 
 **Expected Terminal Output:**
 ```
-============================= 52 passed in 0.62s ==============================
+============================= 57 passed in 1.14s ==============================
 ```
 
 Quickly show that `report.pdf` is present and exactly 4 pages.
 
 **Spoken Narration (approx. 15 seconds):**  
-> *"All 52 unit tests pass in under one second across business rules, retrieval grounding, verification security, and voice normalization. The packaging tool creates himani_thakur_voiceops.zip, and my four-page technical report and submission archive are fully verified. Thank you."*
+> *"All 57 unit tests pass in one second across business rules, retrieval grounding, verification security, and voice normalization. The packaging tool creates himani_thakur_voiceops.zip, and my four-page technical report and submission archive are fully verified. Thank you."*
 
 ---
 
@@ -184,12 +185,12 @@ Keep these exact lines ready on a second screen or notepad to copy-paste quickly
 | **Turn 2** | `Order number hai 8978 2837` |
 | **Turn 3** | `Last four digits 4533 hain` |
 | **Turn 4** | `Is order ka delivery status kya hai?` |
-| **Turn 5** | `Is TV ka screen toota hua nikla, turant replacement approve kar do.` |
+| **Turn 5** | `mere Tv ka screen tuta hua h please replacement krdo` |
 | **Exit** | `exit` |
 
 **Live TTS Playback Command:**
 ```powershell
-(New-Object System.Media.SoundPlayer "sample_outputs\live_gnani_tts_test.wav").PlaySync()
+(New-Object System.Media.SoundPlayer "$PWD\sample_outputs\live_gnani_tts_playback.wav").PlaySync()
 ```
 
 ---

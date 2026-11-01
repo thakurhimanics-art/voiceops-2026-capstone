@@ -114,7 +114,7 @@ Step 3 was evaluated across all **23 multi-turn conversations (96 customer turns
 ## 5. Bonus Work Actually Implemented
 
 1. **Multilingual Spoken Digit & Order ID Normalizer:** Built a specialized normalizer (`src/step4_voice/normalizer.py`) that extracts 8-digit order IDs and 4-digit verification values from mixed Hindi-English spoken transcripts (e.g., converting *"मेरे ऑर्डर एट नाइन सेवन एट टू एट थ्री सेवन"* directly into `"89782837"`), backed by 10 regression tests.
-2. **Comprehensive Automated Test Suite:** Implemented 52 unit tests covering business-day arithmetic, policy return deadlines, document precedence, identity verification anti-leakage, voice normalization, and batch processor exception safety.
+2. **Comprehensive Automated Test Suite:** Implemented 57 unit tests covering business-day arithmetic, policy return deadlines, document precedence, identity verification anti-leakage, voice normalization, batch processor exception safety, and escalation regression.
 3. **Automated Submission Packaging CLI (`run.py --package`):** A zero-leakage packaging utility that programmatically filters secrets, dataset copies, caches, and virtual environments, validating the output ZIP structure automatically.
 4. **Calendar Engine with Festival Closure Modeling:** Modeled Monday 19 October 2026 as a non-business warehouse festival closure alongside standard Sunday exclusions, correctly calculating refund SLA arrival deadlines.
 
