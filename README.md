@@ -66,7 +66,7 @@ VoiceOps/
 ├── .env.example                          # Environment configuration template
 ├── report.pdf                            # 4-page final capstone report
 ├── REPORT.md                             # Editable source report
-└── DEMO_SCRIPT.md                        # 2-minute video presentation storyboard and script
+└── demo.mp4                              # 2-minute capstone video demonstration
 ```
 
 ---

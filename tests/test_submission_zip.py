@@ -18,7 +18,7 @@ def test_submission_zip_exists_and_clean():
         assert "README.md" in names, "README.md must be in ZIP"
         assert "report.pdf" in names or "REPORT.pdf" in names, "report.pdf must be in ZIP"
         assert "REPORT.md" in names, "REPORT.md must be in ZIP"
-        assert "DEMO_SCRIPT.md" in names, "DEMO_SCRIPT.md must be in ZIP"
+        assert "demo.mp4" in names, "demo.mp4 must be in ZIP"
         assert "requirements.txt" in names, "requirements.txt must be in ZIP"
         assert "run.py" in names, "run.py must be in ZIP"
         assert ".env.example" in names, ".env.example must be in ZIP"
